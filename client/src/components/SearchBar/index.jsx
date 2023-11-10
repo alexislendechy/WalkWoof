@@ -1,0 +1,1 @@
+// Componente repetible de search bar
