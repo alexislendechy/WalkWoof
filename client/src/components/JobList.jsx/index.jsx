@@ -1,70 +1,68 @@
 import { useEffect } from 'react';
-import ProductItem from '../ProductItem';
+import WalkerProfile from '../WalkerProfile'; 
 import { useStoreContext } from '../../utils/GlobalState';
-import { UPDATE_PRODUCTS } from '../../utils/actions';
+import { UPDATE_WALKERS } from '../../utils/actions'; // Temporales?
 import { useQuery } from '@apollo/client';
-import { QUERY_PRODUCTS } from '../../utils/queries';
+import { QUERY_WALKERS } from '../../utils/queries'; // Temporales?
 import { idbPromise } from '../../utils/helpers';
-import spinner from '../../assets/spinner.gif';
 
-function ProductList() {
+
+function WalkersList() {
   const [state, dispatch] = useStoreContext();
 
-  const { currentCategory } = state;
+  const { currentLocation } = state; // Assuming you have a state for currentLocation
 
-  const { loading, data } = useQuery(QUERY_PRODUCTS);
+  const { loading, data } = useQuery(QUERY_WALKERS); // Update query
 
   useEffect(() => {
     if (data) {
       dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
+        type: UPDATE_WALKERS, // Update action type
+        walkers: data.walkers, // Update data key
       });
-      data.products.forEach((product) => {
-        idbPromise('products', 'put', product);
+      data.walkers.forEach((walker) => {
+        idbPromise('walkers', 'put', walker);
       });
     } else if (!loading) {
-      idbPromise('products', 'get').then((products) => {
+      idbPromise('walkers', 'get').then((walkers) => {
         dispatch({
-          type: UPDATE_PRODUCTS,
-          products: products,
+          type: UPDATE_WALKERS, // Update action type
+          walkers: walkers, // Update data key
         });
       });
     }
   }, [data, loading, dispatch]);
 
-  function filterProducts() {
-    if (!currentCategory) {
-      return state.products;
+  function filterWalkers() {
+    // Assuming each walker has a location property and a function for calculating distance???? Work in progress maybe?
+    if (!currentLocation) {
+      return state.walkers;
     }
 
-    return state.products.filter(
-      (product) => product.category._id === currentCategory
+    return state.walkers.filter(
+      (walker) => walker.location && walker.calculateDistance(currentLocation) < 10 // Adjust the distance as needed
     );
   }
 
   return (
     <div className="my-2">
-      <h2>Our Products:</h2>
-      {state.products.length ? (
+      <h2>Available Pet Walkers:</h2>
+      {state.walkers.length ? (
         <div className="flex-row">
-          {filterProducts().map((product) => (
-            <ProductItem
-              key={product._id}
-              _id={product._id}
-              image={product.image}
-              name={product.name}
-              price={product.price}
-              quantity={product.quantity}
+          {filterWalkers().map((walker) => (
+            <WalkerProfile
+              key={walker._id}
+              _id={walker._id}
+              // Include other properties specific to your WalkerItem component
             />
           ))}
         </div>
       ) : (
-        <h3>You haven't added any products yet!</h3>
+        <h3>No available pet walkers in your area!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>
   );
 }
 
-export default ProductList;
+export default WalkersList;

@@ -1,9 +1,9 @@
-import Signup from "../components/Auth";
+import SignupComponent from "../components/Auth";
 
 const Signup = () => {
   return (
     <div className="container">
-      <Signup/>
+      <SignupComponent/>
     </div>
   );
 };
