@@ -10,15 +10,14 @@ import { idbPromise } from '../../utils/helpers';
 function WalkersList() {
   const [state, dispatch] = useStoreContext();
 
-  const { currentLocation } = state; // Assuming you have a state for currentLocation
+  const { currentLocation } = state;
 
-  const { loading, data } = useQuery(QUERY_WALKERS); // Update query
-
+  const { loading, data } = useQuery(QUERY_WALKERS); // Temporales?
   useEffect(() => {
     if (data) {
       dispatch({
-        type: UPDATE_WALKERS, // Update action type
-        walkers: data.walkers, // Update data key
+        type: UPDATE_WALKERS, 
+        walkers: data.walkers, 
       });
       data.walkers.forEach((walker) => {
         idbPromise('walkers', 'put', walker);
@@ -26,8 +25,8 @@ function WalkersList() {
     } else if (!loading) {
       idbPromise('walkers', 'get').then((walkers) => {
         dispatch({
-          type: UPDATE_WALKERS, // Update action type
-          walkers: walkers, // Update data key
+          type: UPDATE_WALKERS, 
+          walkers: walkers, 
         });
       });
     }
@@ -40,7 +39,7 @@ function WalkersList() {
     }
 
     return state.walkers.filter(
-      (walker) => walker.location && walker.calculateDistance(currentLocation) < 10 // Adjust the distance as needed
+      (walker) => walker.location && walker.calculateDistance(currentLocation) < 10 // Por si los rangos de acción sirve n en leaflet, si no, luego se cambia esto
     );
   }
 
@@ -53,7 +52,7 @@ function WalkersList() {
             <WalkerProfile
               key={walker._id}
               _id={walker._id}
-              // Include other properties specific to your WalkerItem component
+
             />
           ))}
         </div>

@@ -1,15 +1,19 @@
-import ProductList from "../components/ProductList";
-import CategoryMenu from "../components/CategoryMenu";
 import Cart from "../components/Cart";
+import WalkersList from "../components/WalkersList";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
+import SearchBar from "../components/SearchBar";
 
-const WalkerProfile = () => {
+const SearchResults = () => {
   return (
     <div className="container">
-      <CategoryMenu />
-      <ProductList />
+      <SearchBar/>
+      <Nav/>
+      <WalkersList />
       <Cart />
+      <Footer/>
     </div>
   );
 };
 
-export default WalkerProfile;
+export default SearchResults;

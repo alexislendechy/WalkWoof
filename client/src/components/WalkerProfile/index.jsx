@@ -1,97 +1,26 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { ADD_WALKER_PROFILE } from '../utils/mutations';
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_WALKER_PROFILE } from '../utils/queries';
 
-const WalkerProfile = () => {
-  // State to store the walker profile data
-  const [walkerProfile, setWalkerProfile] = useState({
-    name: '',
-    experience: '',
-    location: '',
-    // Add other properties as needed
+const WalkerProfileView = ({ walkerId }) => {
+  // Use a GraphQL query to fetch walker profile information
+  const { loading, error, data } = useQuery(GET_WALKER_PROFILE, {
+    variables: { walkerId },
   });
 
-  // Mutation to add a new walker profile
-  const [addWalkerProfile, { error }] = useMutation(ADD_WALKER_PROFILE);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
-  // Function to handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setWalkerProfile({
-      ...walkerProfile,
-      [name]: value,
-    });
-  };
-
-  // Function to handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      // Make a GraphQL mutation to add a new walker profile
-      const { data } = await addWalkerProfile({
-        variables: {
-          input: { ...walkerProfile },
-        },
-      });
-
-      // Handle success
-      console.log('Walker profile added successfully:', data);
-      // Optionally, you can reset the form or navigate to another page
-      setWalkerProfile({
-        name: '',
-        experience: '',
-        location: '',
-      });
-    } catch (mutationError) {
-      // Handle errors
-      console.error('Error adding walker profile:', mutationError.message);
-      // Display an error message to the user or take appropriate action
-    }
-  };
+  const walker = data.getWalkerProfile; // Adjust based on your actual GraphQL response structure
 
   return (
-    <div className="container">
-      <h2>Add Walker Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={walkerProfile.name}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="experience">Experience:</label>
-          <input
-            type="text"
-            id="experience"
-            name="experience"
-            value={walkerProfile.experience}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="location">Location:</label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            value={walkerProfile.location}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <button type="submit">Add Walker Profile</button>
-        </div>
-      </form>
-      {error && <p>Error: {error.message}</p>}
+    <div>
+      <h2>Walker Profile</h2>
+      <p>Name: {walker.name}</p>
+      <p>Email: {walker.email}</p>
+      {/* Include other details you want to display */}
     </div>
   );
 };
 
-export default WalkerProfile;
+export default WalkerProfileView;
