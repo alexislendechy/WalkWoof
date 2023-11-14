@@ -7,9 +7,8 @@ const NavbarContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 10px 30px;
-  background-image: linear-gradient(to bottom right, #503a5c, #fcab65, #97536d);
-  border-bottom: 2px solid #fff; /* Adjust the border color as needed */
-  color: #fff; /* Adjust the text color as needed */
+  background-image: linear-gradient(to bottom right, rgba(80, 58, 92, 0), rgba(252, 171, 101, 0), rgba(151, 83, 109, 0));
+  color: #fff;
 `;
 
 const Logo = styled.h1`
@@ -22,30 +21,6 @@ const Logo = styled.h1`
   }
 `;
 
-const Navigation = styled.nav`
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-
-    li {
-      margin-right: 1rem;
-
-      a {
-        text-decoration: none;
-        color: inherit;
-        font-weight: bold;
-        transition: color 0.3s ease-in-out;
-
-        &:hover {
-          color: #fd7e14; /* Adjust the hover color as needed */
-        }
-      }
-    }
-  }
-`;
 
 function Nav() {
 
