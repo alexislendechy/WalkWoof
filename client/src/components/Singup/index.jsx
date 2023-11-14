@@ -16,6 +16,8 @@ function SignupComponent(props) {
         password: formState.password,
         firstName: formState.firstName,
         lastName: formState.lastName,
+        owner:fromState.owner,
+        walker:fromState.walker,
       },
     });
     const token = mutationResponse.data.addUser.token;
@@ -76,6 +78,25 @@ function SignupComponent(props) {
             onChange={handleChange}
           />
         </div>
+        <div className="flex-row space-between my-2">
+          <label htmlFor="owner">Owner:</label>
+          <input
+            placeholder="Owner"
+            name="owner"
+            type="checkbox"
+            id="owner"
+            onChange={handleChange}
+          />
+        </div>
+        <div className='flex-row space-between my-2'>
+          <label htmlFor='walker'>Walker:</label>
+          <input
+            placeholder='Walker'
+            name='walker'
+            type='checkbox'
+            id='walker'
+            onChange={handleChange}
+          />
         <div className="flex-row flex-end">
           <button type="submit">Submit</button>
         </div>

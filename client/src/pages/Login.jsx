@@ -2,7 +2,7 @@ import LoginComponent from "../components/Login";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 
-const Signup = () => {
+const Login = () => {
   return (
     <div className="container">
       <Nav/>
@@ -12,4 +12,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
