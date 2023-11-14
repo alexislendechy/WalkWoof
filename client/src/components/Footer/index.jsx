@@ -1,0 +1,1 @@
+//Este componente mostrara el footer de todo el sitio?
