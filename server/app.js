@@ -1,11 +1,31 @@
 const express = require('express');
-const verifyRole = require('./utils/roleMiddleware');
+const verifyRole = require('./utils/roles');
+const User = require('./models/User');
 
 const app = express();
 
-app.post('/admin', verifyRole(['admin']), (req, res) => {
-  res.send('Welcome Admin!');
+app.get('/admin/users', verifyRole(['admin']), (req, res) => {
+  try {
+    const users = User.find({});
+    res.json(users);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
 });
+
+app.delete('/admin/users/:userId', verifyRole(['admin']), async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.userId);
+    if (!deletedUser) {
+      res.status(404).send('User not found');
+    }
+    res.send('User deleted');
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
+
+
 
 app.get('/owner', verifyRole(['owner']), (req, res) => {
   res.send('Welcome Owner!');

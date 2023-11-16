@@ -1,5 +1,5 @@
 const {signToken, AuthenticationError} = require('../utils/auth')
-c
+
 const resolvers = { 
     Query: {},
 
@@ -24,5 +24,7 @@ const resolvers = {
         removeUser: async (parent, {username, email}, context) => {
             if (context.username)
             return await User.findOneAndDelete({username, email});
+        },
         
     }
+};
