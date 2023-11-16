@@ -18,8 +18,13 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minlength: 5,
-  }
-});
+  },
+  role: {
+    type: String,
+    enum: ['owner', 'admin', 'walker'],
+    default: 'owner',
+  },
+  });
 
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
