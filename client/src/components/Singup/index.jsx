@@ -33,7 +33,9 @@ function SignupComponent(props) {
   };
 
   return (
+    
     <div className="container my-1">
+      <AuthProvider><Dashboard></Dashboard></AuthProvider>
       <Link to="/login">← Go to Login</Link>
 
       <h2>Signup</h2>
@@ -97,6 +99,7 @@ function SignupComponent(props) {
             id='walker'
             onChange={handleChange}
           />
+          </div>
         <div className="flex-row flex-end">
           <button type="submit">Submit</button>
         </div>
