@@ -9,13 +9,16 @@ const NavbarContainer = styled.header`
   align-items: center;
   padding: 10px 30px;
   color: #584372;
-  height: 180px; /* Adjust the height as needed */
+  height: 180px; 
+  background-image: linear-gradient(to bottom right, #b88aad, #f7ddb7, #c995aa);
 `;
 
 const Logo = styled.div`
-background-image: linear-gradient(to bottom right, rgba(80, 58, 92, 0), rgba(252, 171, 101, 0), rgba(151, 83, 109, 0));
   display: flex;
   align-items: center;
+  & > * {
+    margin-right: 10px;
+  }
 `;
 
 const LogoImage = styled.img`

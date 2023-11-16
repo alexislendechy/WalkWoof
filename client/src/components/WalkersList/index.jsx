@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import WalkerProfile from '../WalkerProfile'; 
 import { useStoreContext } from '../../utils/GlobalState';
-import { UPDATE_WALKERS } from '../../utils/actions'; // Temporales?
+//import { UPDATE_WALKERS } from '../../utils/actions'; // Temporales?
 import { useQuery } from '@apollo/client';
-import { QUERY_WALKERS } from '../../utils/queries'; // Temporales?
-import { idbPromise } from '../../utils/helpers';
+//import { QUERY_WALKERS } from '../../utils/queries'; // Temporales?
+//import { idbPromise } from '../../utils/helpers';
 
 
 function WalkersList() {

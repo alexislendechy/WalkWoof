@@ -37,6 +37,7 @@ const Home = () => {
   return (
     <HomeContainer>
       <SearchBar/>
+      <SearchBar/>
 
       <PetWalker />
 

@@ -37,7 +37,6 @@ const MyProfile = () => {
   return (
     <ProfileContainer>
       <SearchBar/>
-
       <PetWalker />
 
     </ProfileContainer>
