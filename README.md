@@ -2,7 +2,7 @@
 
 [![License:MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit/)
 
-The DWalkWoof 🦮 App is a platform that helps dog owners find walking partners for their furry friends. Whether you want someone to join you on a daily walk or need assistance when you're busy, this app connects dog enthusiasts in your local area.
+The WalkWoof 🦮 App is a platform that helps dog owners find walking partners for their furry friends. Whether you want someone to join you on a daily walk or need assistance when you're busy, this app connects dog enthusiasts in your local area.
 
 ## Table of Contents
 
