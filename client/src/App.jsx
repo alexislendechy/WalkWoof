@@ -29,9 +29,11 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <div>
+
       <h1>Dog Walking App</h1>
       <Nav />
       < Header/>
+
       <MapComponent />
       <Footer />
       
