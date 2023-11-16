@@ -1,20 +1,62 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_WALKER_PROFILE } from '../utils/mutations';
+import styled from 'styled-components';
+
+const FormContainer = styled.div`
+  max-width: 66.67%; /* 2/3 of the page width */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    div {
+      margin-bottom: 20px;
+
+      label {
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+    }
+
+    button {
+      background-color: white;
+      color: #8a2be2; /* Purple color */
+      padding: 10px;
+      border: 1px solid #8a2be2;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+
+      &:hover {
+        background-color: #8a2be2; /* Darker purple */
+        color: white;
+      }
+    }
+  }
+`;
 
 const WalkerProfile = () => {
-  // State to store the walker profile data
   const [walkerProfile, setWalkerProfile] = useState({
     name: '',
     experience: '',
     location: '',
-    // Add other properties as needed
   });
 
-  // Mutation to add a new walker profile
   const [addWalkerProfile, { error }] = useMutation(ADD_WALKER_PROFILE);
 
-  // Function to handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setWalkerProfile({
@@ -23,35 +65,30 @@ const WalkerProfile = () => {
     });
   };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Make a GraphQL mutation to add a new walker profile
       const { data } = await addWalkerProfile({
         variables: {
           input: { ...walkerProfile },
         },
       });
 
-      // Handle success
       console.log('Walker profile added successfully:', data);
-      // Optionally, you can reset the form or navigate to another page
+
       setWalkerProfile({
         name: '',
         experience: '',
         location: '',
       });
     } catch (mutationError) {
-      // Handle errors
       console.error('Error adding walker profile:', mutationError.message);
-      // Display an error message to the user or take appropriate action
     }
   };
 
   return (
-    <div className="container">
+    <FormContainer>
       <h2>Add Walker Profile</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -90,7 +127,7 @@ const WalkerProfile = () => {
         </div>
       </form>
       {error && <p>Error: {error.message}</p>}
-    </div>
+    </FormContainer>
   );
 };
 
