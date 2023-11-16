@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import ProductList from '../components/ProductList';
+
 import PetWalker from '../components/CreateOwner';
 import SearchBar from '../components/SearchBar';
 
@@ -19,6 +19,11 @@ const gradientAnimation = keyframes`
 
 // Define a styled container for the Home component with animation
 const HomeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Adjust the height based on your needs */
   padding: 30px;
   background-image: linear-gradient(to bottom right, #b88aad, #f7ddb7, #c995aa);
   border-radius: 10px;
@@ -27,11 +32,12 @@ const HomeContainer = styled.div`
   animation: ${gradientAnimation} 10s linear infinite; 
 `;
 
+
 const Home = () => {
   return (
     <HomeContainer>
       <SearchBar/>
-      <ProductList />
+
       <PetWalker />
 
     </HomeContainer>

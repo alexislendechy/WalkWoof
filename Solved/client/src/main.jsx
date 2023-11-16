@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
+import MyProfile from './pages/MyProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,12 @@ const router = createBrowserRouter([
       }, {
         path: '/products/:id',
         element: <Detail />
-      }
+      },
+      {
+        path: "/profile",
+        element: <MyProfile />,
+        errorElement: <h1 className="display-2">Wrong page!</h1>,
+      },
     ]
   }
 ]);

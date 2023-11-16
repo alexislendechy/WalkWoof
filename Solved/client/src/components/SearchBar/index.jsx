@@ -6,6 +6,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 margin-bottom: 20px;
+min-width: 66.67%;
 max-width: 66.67%;
 
   input {

@@ -1,91 +1,101 @@
-import Auth from "../../utils/auth";
-import { Link } from "react-router-dom";
+import React from 'react';
 import styled from 'styled-components';
+import Auth from '../../utils/auth';
+import { Link } from 'react-router-dom';
 
 const NavbarContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 30px;
-  background-image: linear-gradient(to bottom right, rgba(80, 58, 92, 0), rgba(252, 171, 101, 0), rgba(151, 83, 109, 0));
-  color: #fff;
+  color: #584372;
 `;
 
-const Logo = styled.h1`
-  font-size: 1.5rem;
+const Logo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const LogoImage = styled.img`
+  width: 150px;
+  margin-right: 10px;
+  border-radius: 50%;
+`;
+
+const LogoText = styled.h1`
+  font-size: 40px;
   margin: 0;
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+  color: #584372;
 `;
 
+const NavLinks = styled.ul`
+  list-style: none;
+  font-size: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
 
-function Nav() {
+  li {
+    margin-right: 2rem;
 
-  function showNavigation() {
-    if (Auth.loggedIn()) {
-      return (
-        <NavbarContainer>
-        <ul className="flex-row">
-          <li className="mx-1">
-            <Link to="/myWalkers!">
-              My trusted walkers!
-            </Link>
-          </li>
-          <li className="mx-1">
-            <Link to="/profile">
-              My Profile
-            </Link>
-          </li>
-          <li className="mx-1">
-            <Link to="/appointments">
-              Appointments
-            </Link>
-          </li>
-          <li className="mx-1">
-            {/* this is not using the Link component to logout or user and then refresh the application to the start */}
-            <a href="/" onClick={() => Auth.logout()}>
-              Logout
-            </a>
-          </li>
-        </ul>
-        </NavbarContainer>
-      );
-    } else {
-      return (
-        <NavbarContainer>
-        <ul className="flex-row">
-          <li className="mx-1">
-            <Link to="/signup">
-              Signup
-            </Link>
-          </li>
-          <li className="mx-1">
-            <Link to="/login">
-              Login
-            </Link>
-          </li>
-        </ul>
-        </NavbarContainer>        
-      );
+    a {
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease-in-out;
+      &:hover {
+        color: #fd7e14; 
+      }
     }
   }
 
-  return (
-    <header className="flex-row px-1">
-      <h1>
-        <Link to="/">
-          <span role="img" aria-label="Dog emoji">🐶</span>
-          Walk Woof
-        </Link>
-      </h1>
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
 
-      <nav>
-        {showNavigation()}
-      </nav>
-    </header>
+    li {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+  }
+`;
+
+function Nav() {
+  return (
+    <NavbarContainer>
+      <Logo>
+        <Link to="/">
+          <LogoImage src={`${import.meta.env.BASE_URL}src/assets/WalkWoof.png`} alt="Logo" />
+          <LogoText>Walk Woof</LogoText>
+        </Link>
+      </Logo>
+      <NavLinks>
+        {Auth.loggedIn() ? (
+          <>
+            <li className="mx-1">
+              <Link to="/myWalkers!">My trusted walkers!</Link>
+            </li>
+            <li className="mx-1">
+              <Link to="/profile">My Profile</Link>
+            </li>
+            <li className="mx-1">
+              <Link to="/appointments">Appointments</Link>
+            </li>
+            <li className="mx-1">
+              <a href="/" onClick={() => Auth.logout()}>Logout</a>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="mx-1">
+              <Link to="/signup">Signup</Link>
+            </li>
+            <li className="mx-1">
+              <Link to="/login">Login</Link>
+            </li>
+          </>
+        )}
+      </NavLinks>
+    </NavbarContainer>
   );
 }
 

@@ -70,3 +70,24 @@ export const ADD_OWNER_PROFILE = gql`
     }
   }
 `;
+
+export const ADD_WALKER_PROFILE = gql`
+  mutation addUser(
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
+  ) {
+    addUser(
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      password: $password
+    ) {
+      token
+      user {
+        _id
+      }
+    }
+  }
+`;

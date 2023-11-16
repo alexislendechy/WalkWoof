@@ -1,116 +1,97 @@
-import Auth from "../../utils/auth";
-import { Link } from "react-router-dom";
+import React from 'react';
 import styled from 'styled-components';
+import Auth from '../../utils/auth';
+import { Link } from 'react-router-dom';
 
 const NavbarContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 30px;
-  background-image: linear-gradient(to bottom right, #503a5c, #fcab65, #97536d);
-  border-bottom: 2px solid #fff; /* Adjust the border color as needed */
-  color: #fff; /* Adjust the text color as needed */
+  color: #584372;
+  height: 180px; /* Adjust the height as needed */
 `;
 
-const Logo = styled.h1`
-  font-size: 1.5rem;
+const Logo = styled.div`
+background-image: linear-gradient(to bottom right, rgba(80, 58, 92, 0), rgba(252, 171, 101, 0), rgba(151, 83, 109, 0));
+  display: flex;
+  align-items: center;
+`;
+
+const LogoImage = styled.img`
+  width: 150px;
+  margin-right: 10px;
+  border-radius: 50%;
+`;
+
+const LogoText = styled.h1`
+  font-size: 40px;
   margin: 0;
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+  color: #584372;
 `;
 
-const Navigation = styled.nav`
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
+const NavLinks = styled.ul`
+  list-style: none;
+  font-size: 20px;
 
-    li {
-      margin-right: 1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  background-image: linear-gradient(to bottom right, rgba(80, 58, 92, 0), rgba(252, 171, 101, 0), rgba(151, 83, 109, 0));
 
-      a {
-        text-decoration: none;
-        color: inherit;
-        font-weight: bold;
-        transition: color 0.3s ease-in-out;
+  li {
+    margin-right: 2rem;
 
-        &:hover {
-          color: #fd7e14; /* Adjust the hover color as needed */
-        }
+    a {
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease-in-out;
+      &:hover {
+        color: #fd7e14; 
       }
     }
   }
 `;
 
 function Nav() {
-
-  function showNavigation() {
-    if (Auth.loggedIn()) {
-      return (
-        <NavbarContainer>
-        <ul className="flex-row">
-          <li className="mx-1">
-            <Link to="/myWalkers!">
-              My trusted walkers!
-            </Link>
-          </li>
-          <li className="mx-1">
-            <Link to="/profile">
-              My Profile
-            </Link>
-          </li>
-          <li className="mx-1">
-            <Link to="/appointments">
-              Appointments
-            </Link>
-          </li>
-          <li className="mx-1">
-            {/* this is not using the Link component to logout or user and then refresh the application to the start */}
-            <a href="/" onClick={() => Auth.logout()}>
-              Logout
-            </a>
-          </li>
-        </ul>
-        </NavbarContainer>
-      );
-    } else {
-      return (
-        <NavbarContainer>
-        <ul className="flex-row">
-          <li className="mx-1">
-            <Link to="/signup">
-              Signup
-            </Link>
-          </li>
-          <li className="mx-1">
-            <Link to="/login">
-              Login
-            </Link>
-          </li>
-        </ul>
-        </NavbarContainer>        
-      );
-    }
-  }
-
   return (
-    <header className="flex-row px-1">
-      <h1>
+    <NavbarContainer>
+      <Logo>
         <Link to="/">
-          <span role="img" aria-label="Dog emoji">🐶</span>
-          Walk Woof
+        <LogoImage src={`${import.meta.env.BASE_URL}src/assets/WalkWoof.png`} alt="Logo" />
         </Link>
-      </h1>
-
-      <nav>
-        {showNavigation()}
-      </nav>
-    </header>
+        <Link to="/">
+        <LogoText>Walk Woof</LogoText>
+        </Link>
+      </Logo>
+      <NavLinks>
+        {Auth.loggedIn() ? (
+          <>
+            <li className="mx-1">
+              <Link to="/myWalkers!">My trusted walkers!</Link>
+            </li>
+            <li className="mx-1">
+              <Link to="/profile">My Profile</Link>
+            </li>
+            <li className="mx-1">
+              <Link to="/appointments">Appointments</Link>
+            </li>
+            <li className="mx-1">
+              <a href="/" onClick={() => Auth.logout()}>Logout</a>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="mx-1">
+              <Link to="/signup">Signup</Link>
+            </li>
+            <li className="mx-1">
+              <Link to="/login">Login</Link>
+            </li>
+          </>
+        )}
+      </NavLinks>
+    </NavbarContainer>
   );
 }
 

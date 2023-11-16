@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import OwnerDashboard from './pages/Dashboards/OwnerDashboard';
 import WalkerDashboard from './pages/Dashboards/WalkerDashboard';
 import AdminDashboard from './pages/Dashboards/AdminDashboard';
+import MyProfile from './pages/MyProfile.jsx';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import SearchResults from './pages/SearchResults';
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
       {
         path: '/payments',
         element: <ProtectedRoute element={Payments} roles={['owner', 'walker']} />
+      },
+      {
+        path: "/profile",
+        element: <MyProfile />,
+        errorElement: <h1 className="display-2">Wrong page!</h1>,
       },
       {
         path: "/",

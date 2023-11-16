@@ -1,11 +1,47 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { ADD_USER } from '../utils/mutations';
+import styled from 'styled-components';
 
-function SignupComponent(props) {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+const SignupContainer = styled.div`
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+`;
+
+const SignupForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FormInput = styled.input`
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+
+const FormLabel = styled.label`
+  font-weight: bold;
+  margin-bottom: 8px;
+`;
+
+const SubmitButton = styled.button`
+  background-color: #584372;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
+const SignupComponent = () => {
+  const [formState, setFormState] = useState({ email: '', password: '', firstName: '', lastName: '' });
   const [addUser] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
@@ -31,14 +67,14 @@ function SignupComponent(props) {
   };
 
   return (
-    <div className="container my-1">
+    <SignupContainer>
       <Link to="/login">← Go to Login</Link>
 
       <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="firstName">First Name:</label>
-          <input
+      <SignupForm onSubmit={handleFormSubmit}>
+        <div>
+          <FormLabel htmlFor="firstName">First Name:</FormLabel>
+          <FormInput
             placeholder="First"
             name="firstName"
             type="text"
@@ -46,9 +82,9 @@ function SignupComponent(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="lastName">Last Name:</label>
-          <input
+        <div>
+          <FormLabel htmlFor="lastName">Last Name:</FormLabel>
+          <FormInput
             placeholder="Last"
             name="lastName"
             type="text"
@@ -56,9 +92,9 @@ function SignupComponent(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email:</label>
-          <input
+        <div>
+          <FormLabel htmlFor="email">Email:</FormLabel>
+          <FormInput
             placeholder="youremail@test.com"
             name="email"
             type="email"
@@ -66,9 +102,9 @@ function SignupComponent(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
+        <div>
+          <FormLabel htmlFor="pwd">Password:</FormLabel>
+          <FormInput
             placeholder="******"
             name="password"
             type="password"
@@ -76,11 +112,11 @@ function SignupComponent(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+        <div>
+          <SubmitButton type="submit">Submit</SubmitButton>
         </div>
-      </form>
-    </div>
+      </SignupForm>
+    </SignupContainer>
   );
 }
 

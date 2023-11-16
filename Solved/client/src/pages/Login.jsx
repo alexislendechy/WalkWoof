@@ -1,10 +1,54 @@
-import { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
+import styled from 'styled-components';
 
-function Login(props) {
+const LoginContainer = styled.div`
+  max-width: 400px;
+  margin: auto;
+  margin-top: 80px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 40px rgba(80, 58, 92, 2);
+`;
+
+const LoginForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FormInput = styled.input`
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+
+const FormLabel = styled.label`
+  font-weight: bold;
+  margin-bottom: 8px;
+`;
+
+const SubmitButton = styled.button`
+  background-color: #584372;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    color: #fd7e14; 
+  }
+`;
+
+const ErrorText = styled.p`
+  color: #ff0000;
+`;
+
+const Login = () => {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN);
 
@@ -30,14 +74,14 @@ function Login(props) {
   };
 
   return (
-    <div className="container my-1">
+    <LoginContainer>
       <Link to="/signup">← Go to Signup</Link>
 
       <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email address:</label>
-          <input
+      <LoginForm onSubmit={handleFormSubmit}>
+        <div>
+          <FormLabel htmlFor="email">Email address:</FormLabel>
+          <FormInput
             placeholder="youremail@test.com"
             name="email"
             type="email"
@@ -45,9 +89,9 @@ function Login(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
+        <div>
+          <FormLabel htmlFor="pwd">Password:</FormLabel>
+          <FormInput
             placeholder="******"
             name="password"
             type="password"
@@ -57,14 +101,14 @@ function Login(props) {
         </div>
         {error ? (
           <div>
-            <p className="error-text">The provided credentials are incorrect</p>
+            <ErrorText>The provided credentials are incorrect</ErrorText>
           </div>
         ) : null}
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+        <div>
+          <SubmitButton type="submit">Submit</SubmitButton>
         </div>
-      </form>
-    </div>
+      </LoginForm>
+    </LoginContainer>
   );
 }
 
