@@ -12,7 +12,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import SearchResults from './pages/SearchResults';
 import Payments from './pages/Payments';
-import AuthContext from './context/AuthContext';
+import AuthContext from './Contexts/AuthContext.js';
 
 const ProtectedRoute = ({ element: Element, roles, ...rest }) => {
   const authContext = useContext(AuthContext);
