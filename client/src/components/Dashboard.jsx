@@ -31,4 +31,6 @@ const Dashboard = () => {
     : <button onClick={(e) => LogIn(e)}>Log In</button>}
        </>
     )
-}
+};
+
+export default Dashboard;

@@ -8,7 +8,7 @@ import Home from './pages/Home';
 //import OwnerDashboard from './pages/Dashboards/Owner';
 //import WalkerDashboard from './pages/Dashboards/Walker';
 //import AdminDashboard from './pages/Dashboards/Admin';
-import Login from './pages/Login.jsx';
+import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NoMatch from './pages/NoMatch.jsx';
 import MyProfile from './pages/MyProfile.jsx';
