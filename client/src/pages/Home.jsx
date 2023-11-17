@@ -5,10 +5,9 @@ import Nav from "../components/Nav";
 //import Footer from "../components/Footer";
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import PetWalker from '../components/CreateOwner';
+//import PetWalker from '../components/WalkerProfile';
 import SearchBar from '../components/SearchBar';
-import MapComponent from "../components/MapComponent";
-
+import MapComponent from '../components/MapComponent';
 
 // Define a keyframe animation for the HomeContainer
 const gradientAnimation = keyframes`
@@ -29,7 +28,7 @@ const HomeContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Adjust the height based on your needs */
+  height: 100vh; 
   padding: 30px;
   background-image: linear-gradient(to bottom right, #b88aad, #f7ddb7, #c995aa);
   border-radius: 10px;
@@ -44,12 +43,9 @@ const Home = () => {
 
     
     <HomeContainer>
-      <Nav/>
       <SearchBar/>
-      <PetWalker />
       <MapComponent/>
-
-    </HomeContainer>
+     </HomeContainer>
 
   );
 };

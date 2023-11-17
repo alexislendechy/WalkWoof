@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-//import { GET_WALKER_PROFILE } from '../utils/queries';
+import { GET_WALKER_PROFILE } from '../utils/queries.js';
 import styled, { keyframes } from 'styled-components';
 
 // Define a keyframe animation for the ProfileContainer
