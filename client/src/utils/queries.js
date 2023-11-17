@@ -32,6 +32,7 @@ export const GET_WALKER_PROFILES = gql`
         walkerImage
         }
     }
+<<<<<<< Updated upstream
     `;
 export const GET_OWNER_PROFILES = gql`
     query getOwnerProfiles {
@@ -86,3 +87,6 @@ export const GET_OWNER_PROFILES = gql`
     }
     `;
     
+=======
+    `;
+>>>>>>> Stashed changes
