@@ -1,91 +1,92 @@
-import { gql } from '@apollo/client';
+import {gql} from '@apollo/client';
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
-      _id
-      name
-      description
-      price
-      quantity
-      image
-      category {
+export const GET_PET_PROFILES = gql`
+    query getPetProfiles {
+        petProfiles {
         _id
-      }
-    }
-  }
-`;
-
-export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ProductInput]) {
-    checkout(products: $products) {
-      session
-    }
-  }
-`;
-
-export const QUERY_ALL_PRODUCTS = gql`
-  {
-    products {
-      _id
-      name
-      description
-      price
-      quantity
-      category {
-        name
-      }
-    }
-  }
-`;
-
-export const QUERY_CATEGORIES = gql`
-  {
-    categories {
-      _id
-      name
-    }
-  }
-`;
-
-export const QUERY_USER = gql`
-  {
-    user {
-      firstName
-      lastName
-      orders {
-        _id
-        purchaseDate
-        products {
-          _id
-          name
-          description
-          price
-          quantity
-          image
+        petName
+        petType
+        petBreed
+        petAge
+        petGender
+        petDescription
+        petImage
         }
-      }
     }
-  }
-`;
+    `;
 
-export const GET_WALKER_PROFILE = gql`
-  {
-    user {
-      firstName
-      lastName
-      orders {
+export const GET_WALKER_PROFILES = gql`
+    query getWalkerProfiles {
+        walkerProfiles {
         _id
-        purchaseDate
-        products {
-          _id
-          name
-          description
-          price
-          quantity
-          image
+        walkerName
+        walkerEmail
+        walkerPhone
+        walkerAddress
+        walkerCity
+        walkerState
+        walkerZip
+        walkerCountry
+        walkerWebsite
+        walkerDescription
+        walkerImage
         }
-      }
     }
-  }
-`;
+<<<<<<< Updated upstream
+    `;
+export const GET_OWNER_PROFILES = gql`
+    query getOwnerProfiles {
+        ownerProfiles {
+        _id
+        ownerName
+        ownerEmail
+        ownerPhone
+        ownerAddress
+        ownerCity
+        ownerState
+        ownerZip
+        ownerCountry
+        ownerWebsite
+        ownerDescription
+        ownerImage
+        }
+    }
+    `;
+    export const GET_USER = gql`
+    query getUser {
+        user {
+        _id
+        username
+        email
+        }
+    }
+    `;
+    export const QUERY_CHECKOUT = gql`
+    query getCheckout($petId: ID!) {
+        checkout(petId: $petId) {
+        session
+        }
+    }
+    `;
+    export const QUERY_WALKERS = gql`
+    query getWalkers($city: String) {
+        walkers(city: $city) {
+        _id
+        walkerName
+        walkerEmail
+        walkerPhone
+        walkerAddress
+        walkerCity
+        walkerState
+        walkerZip
+        walkerCountry
+        walkerWebsite
+        walkerDescription
+        walkerImage
+        }
+    }
+    `;
+    
+=======
+    `;
+>>>>>>> Stashed changes
