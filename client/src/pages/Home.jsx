@@ -1,8 +1,14 @@
+
+import Nav from "../components/Nav";
+
+//
+//import Footer from "../components/Footer";
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-
 import PetWalker from '../components/CreateOwner';
 import SearchBar from '../components/SearchBar';
+import MapComponent from "../components/MapComponent";
+
 
 // Define a keyframe animation for the HomeContainer
 const gradientAnimation = keyframes`
@@ -35,13 +41,16 @@ const HomeContainer = styled.div`
 
 const Home = () => {
   return (
-    <HomeContainer>
-      <SearchBar/>
-      <SearchBar/>
 
+    
+    <HomeContainer>
+      <Nav/>
+      <SearchBar/>
       <PetWalker />
+      <MapComponent/>
 
     </HomeContainer>
+
   );
 };
 
