@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import React from 'react';
 import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Routes, Navigate } from 'react-router-dom';
 
 import App from './App.jsx';
 import Home from './pages/Home';
@@ -31,6 +31,7 @@ const ProtectedRoute = ({ element: Element, roles, ...rest }) => {
   // Render the protected element
   return <Route element={<Element />} {...rest} />;
 };
+
 
 const router = createBrowserRouter([
   {

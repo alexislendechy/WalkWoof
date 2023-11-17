@@ -1,12 +1,12 @@
 import "leaflet/dist/leaflet.css";
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-
-import "leaflet/dist/leaflet.css";
 import styled from "styled-components";
 
 const StyledMapContainer = styled(MapContainer)`
-  height: 500px;
+
+  height: 500px; 
+  padding: 30px;
   width: 100%;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -14,6 +14,23 @@ const StyledMapContainer = styled(MapContainer)`
   max-width: 66.67%;
 `;
 
+
+const StyledButton = styled.button`
+button {
+  background-color: white;
+  color: #8a2be2; 
+  padding: 8px 12px;
+  border: 1px solid #8a2be2;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #8a2be2; 
+  color: white;
+}
+`;
 
 const MapComponent = () => {
   /////////////////////////////////
@@ -50,43 +67,39 @@ const MapComponent = () => {
   // Render
   /////////////////////////////////
   return (
+    <StyledMapContainer
+      center={{ lat: coordinates?.lat() || 0, lng: coordinates?.lng() || 0 }}
+      zoom={13}
+      style={{ height: "500px", width: "100%" }}
+    >
+      <div>
+        <h1>MAP</h1>
+        <input
+          type="text"
+          placeholder="Enter an address or location"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <StyledButton onClick={handleGeocode}>Go to address!</StyledButton>
 
-    <div>
-      <h1>MAP</h1>
-      <input
-        type="text"
-        placeholder="Enter an address or location"
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)} // Update search text as user types
-      />
-      <button onClick={handleGeocode}>Go to address!</button>
-
-      {mapInitError ? ( //If map initiation fails
-        <p>Error initializing the map: {mapInitError}</p>
-      ) : //Else
-      coordinates ? ( //Are coordinates available?
-      <StyledMapContainer>
-        <MapContainer
-          center={{ lat: coordinates.lat(), lng: coordinates.lng() }}
-          zoom={13}
-          style={{ height: "500px", width: "100%" }}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <Marker position={{ lat: coordinates.lat(), lng: coordinates.lng() }}>
-            <Popup>
-              Location: {searchText} <br />
-              Coordinates: {coordinates.lat()}, {coordinates.lng()}
-            </Popup>
-          </Marker>
-        </MapContainer>
-        </StyledMapContainer>
-      ) : //End Map render
-      //Else if Map initiation succeed but coordinates are not available render null
-      null}
-    </div>
+        {mapInitError ? (
+          <p>Error initializing the map: {mapInitError}</p>
+        ) : coordinates ? (
+          <>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            <Marker position={{ lat: coordinates.lat(), lng: coordinates.lng() }}>
+              <Popup>
+                Location: {searchText} <br />
+                Coordinates: {coordinates.lat()}, {coordinates.lng()}
+              </Popup>
+            </Marker>
+          </>
+        ) : null}
+      </div>
+    </StyledMapContainer>
   );
 };
 
