@@ -5,14 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./App.jsx";
 import Home from './pages/Home';
-import OwnerDashboard from './pages/Dashboards/OwnerDashboard';
-import WalkerDashboard from './pages/Dashboards/WalkerDashboard';
-import AdminDashboard from './pages/Dashboards/AdminDashboard';
+import OwnerDashboard from './pages/Dashboards/Owner';
+import WalkerDashboard from './pages/Dashboards/Walker';
+import AdminDashboard from './pages/Dashboards/Admin';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import SearchResults from './pages/SearchResults';
 import Payments from './pages/Payments';
-import AuthContext from './context/AuthContext';
+import AuthContext from './Contexts/AuthContext';
 
 const ProtectedRoute = ({ element: Element, roles, ...rest }) => {
   const authContext = useContext(AuthContext);
