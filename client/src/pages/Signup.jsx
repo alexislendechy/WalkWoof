@@ -1,4 +1,5 @@
-import SignupComponent from "../components/Singup";
+import React from "react";
+import SignupComponent from "../components/Signup";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { AuthProvider } from "../Contexts/AuthContext";
@@ -7,9 +8,9 @@ const Signup = () => {
   return (
     <AuthProvider>
     <div className="container">
-      <Nav/>
+
       <SignupComponent/>
-      <Footer/>
+
     </div>
     </AuthProvider>
   );

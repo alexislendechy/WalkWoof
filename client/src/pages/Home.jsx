@@ -8,6 +8,7 @@ import styled, { keyframes } from 'styled-components';
 //import PetWalker from '../components/WalkerProfile';
 import SearchBar from '../components/SearchBar';
 import MapComponent from '../components/MapComponent';
+import Footer from "../components/Footer";
 
 // Define a keyframe animation for the HomeContainer
 const gradientAnimation = keyframes`
@@ -45,7 +46,9 @@ const Home = () => {
     <HomeContainer>
       <SearchBar/>
       <MapComponent/>
+      
      </HomeContainer>
+     
 
   );
 };

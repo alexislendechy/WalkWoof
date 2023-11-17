@@ -9,6 +9,8 @@ const LoginContainer = styled.div`
   max-width: 400px;
   margin: auto;
   margin-top: 80px;
+  margin-bottom: 50vh;
+  
   padding: 20px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.8);

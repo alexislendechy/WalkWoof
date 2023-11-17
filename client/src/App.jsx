@@ -1,5 +1,6 @@
 import React from "react";
-import MapComponent from "./components/MapComponent";
+import { Outlet } from 'react-router-dom';
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -8,7 +9,8 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import Nav from './components/Nav';
-import Home from './pages/Home';
+import Footer from './components/Footer';
+
 
 
 const httpLink = createHttpLink({
@@ -34,8 +36,12 @@ const client = new ApolloClient({
 const App = () => {
   return (
       <ApolloProvider client={client}>
-      <Nav/>
-      <Home/>
+      <div>
+        <Nav/>
+        
+      <Outlet />
+      <Footer/>
+      </div>
       </ApolloProvider>
   );
 };
