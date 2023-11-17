@@ -1,8 +1,8 @@
 // WalkerDashboard.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import PetProfile from '../../components/PetProfiles/PetProfile';
-import { useUser } from '../../contexts/UserContext';
+import PetProfile from '../../components/PetProfiles';
+//import { useUser } from '../../context/UserContext';
 
 const WalkerDashboard = () => {
   const [walkerPetProfiles, setWalkerPetProfiles] = useState([]);

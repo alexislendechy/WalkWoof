@@ -1,7 +1,7 @@
 import Cart from "../components/Cart";
 import WalkersList from "../components/WalkersList";
 import Nav from "../components/Nav";
-import Footer from "../components/Footer";
+//import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 
 const SearchResults = () => {
@@ -11,7 +11,7 @@ const SearchResults = () => {
       <Nav/>
       <WalkersList />
       <Cart />
-      <Footer/>
+      
     </div>
   );
 };

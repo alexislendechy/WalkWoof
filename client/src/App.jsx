@@ -3,12 +3,17 @@ import MapComponent from "./components/MapComponent";
 import {
   ApolloClient,
   InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import Nav from './components/Nav';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Home from './pages/Home';
 
+
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
 
 
 const authLink = setContext((_, { headers }) => {
@@ -28,16 +33,10 @@ const client = new ApolloClient({
 
 const App = () => {
   return (
-    <div>
-
-      <h1>Dog Walking App</h1>
-      <Nav />
-      < Header/>
-
-      <MapComponent />
-      <Footer />
-      
-    </div>
+      <ApolloProvider client={client}>
+      <Nav/>
+      <Home/>
+      </ApolloProvider>
   );
 };
 

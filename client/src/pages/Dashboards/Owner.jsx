@@ -1,8 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_PET_PROFILES_BY_OWNER } from '../graphql/queries'; // Replace with your actual GraphQL query
+//import { GET_PET_PROFILES_BY_OWNER } from '../graphql/queries'; 
 
-import PetProfile from '../../components/PetProfiles/PetProfile';
+import PetProfile from '../../components/PetProfiles';
 
 const PetOwnerDashboard = () => {
   const authContext = useContext(AuthContext);

@@ -1,17 +1,17 @@
-import ReactDOM from "react-dom/client";
-import React, { useContext } from "react";
-import { createBrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import ReactDOM from 'react-dom/client'
+import React from 'react';
+import './index.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import App from "./App.jsx";
+import App from './App.jsx';
 import Home from './pages/Home';
-import OwnerDashboard from './pages/Dashboards/Owner';
-import WalkerDashboard from './pages/Dashboards/Walker';
-import AdminDashboard from './pages/Dashboards/Admin';
+//import OwnerDashboard from './pages/Dashboards/Owner';
+//import WalkerDashboard from './pages/Dashboards/Walker';
+//import AdminDashboard from './pages/Dashboards/Admin';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import SearchResults from './pages/SearchResults';
-import Payments from './pages/Payments';
+//import SearchResults from './pages/SearchResults';
+//import Payments from './pages/Payments';
 import AuthContext from './Contexts/AuthContext';
 
 const ProtectedRoute = ({ element: Element, roles, ...rest }) => {
@@ -35,50 +35,28 @@ const ProtectedRoute = ({ element: Element, roles, ...rest }) => {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
-    errorElement: <NoMatch />,
+    element: <App/>,
+    error: <NoMatch />,
     children: [
       {
-        index: true,
+        index: true, 
         element: <Home />
-      },
-      {
+      }, {
         path: '/login',
         element: <Login />
-      },
-      {
+      }, {
         path: '/signup',
         element: <Signup />
-      },
+      },  
       {
-        path: '/results',
-        element: <SearchResults />
-      },
-      {
-        path: '/user/owner',
-        element: <ProtectedRoute element={OwnerDashboard} roles={['owner']} />
-      },
-      {
-        path: '/user/walker',
-        element: <ProtectedRoute element={WalkerDashboard} roles={['walker']} />
-      },
-      {
-        path: '/user/admin',
-        element: <ProtectedRoute element={AdminDashboard} roles={['admin']} />
-      },
-      {
-        path: '/payments',
-        element: <ProtectedRoute element={Payments} roles={['owner', 'walker']} />
-      },
-      {
-        path: "/",
-        element: <App />,
+        path: "/profile",
+        element: <MyProfile />,
         errorElement: <h1 className="display-2">Wrong page!</h1>,
       },
-    ],
-  },
+    ]
+  }
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
-);
+)

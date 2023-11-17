@@ -2,6 +2,19 @@ import "leaflet/dist/leaflet.css";
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
+import "leaflet/dist/leaflet.css";
+import styled from "styled-components";
+
+const StyledMapContainer = styled(MapContainer)`
+  height: 500px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  min-width: 66.67%;
+  max-width: 66.67%;
+`;
+
+
 const MapComponent = () => {
   /////////////////////////////////
   // States
@@ -37,6 +50,7 @@ const MapComponent = () => {
   // Render
   /////////////////////////////////
   return (
+
     <div>
       <h1>MAP</h1>
       <input
@@ -51,6 +65,7 @@ const MapComponent = () => {
         <p>Error initializing the map: {mapInitError}</p>
       ) : //Else
       coordinates ? ( //Are coordinates available?
+      <StyledMapContainer>
         <MapContainer
           center={{ lat: coordinates.lat(), lng: coordinates.lng() }}
           zoom={13}
@@ -67,6 +82,7 @@ const MapComponent = () => {
             </Popup>
           </Marker>
         </MapContainer>
+        </StyledMapContainer>
       ) : //End Map render
       //Else if Map initiation succeed but coordinates are not available render null
       null}
