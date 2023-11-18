@@ -1,11 +1,13 @@
+const User = require("../models/User"); // Adjust the path to where your User model is located.
+
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {},
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+    addUser: async (parent, { username, email, password, role }) => {
+      const user = await User.create({ username, email, password, role });
       const token = signToken(user);
       return { token, user };
     },
@@ -24,6 +26,9 @@ const resolvers = {
     removeUser: async (parent, { username, email }, context) => {
       if (context.username)
         return await User.findOneAndDelete({ username, email });
+      throw new AuthenticationError("Not logged in");
     },
   },
 };
+
+module.exports = resolvers;
