@@ -45,7 +45,8 @@ function SignupComponent(props) {
   const [formState, setFormState] = useState({
     email: '',
     password: '',
-    name: '',
+    firstName: '',
+    lastName: '',
     owner: false, 
     walker: false,
   });
@@ -58,7 +59,7 @@ function SignupComponent(props) {
       variables: {
         email: formState.email,
         password: formState.password,
-        name: formState.name,
+        name: formState.firstName,
         owner: formState.owner,
         walker: formState.walker,
       },
@@ -87,12 +88,22 @@ function SignupComponent(props) {
       <h2>Signup</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
-        <FormLabel htmlFor="name">Full Name:</FormLabel>
+        <FormLabel htmlFor="firstName">First Name:</FormLabel>
         <FormInput
-            placeholder="Name"
+            placeholder="First"
             name="firstName"
             type="text"
             id="firstName"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row space-between my-2">
+        <FormLabel htmlFor="lastName">Last Name:</FormLabel>
+          <FormInput
+            placeholder="Last"
+            name="lastName"
+            type="text"
+            id="lastName"
             onChange={handleChange}
           />
         </div>

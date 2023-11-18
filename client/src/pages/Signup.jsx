@@ -1,7 +1,6 @@
 import React from "react";
 import SignupComponent from "../components/Singup";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
+
 import { AuthProvider } from "../Contexts/AuthContext";
 
 const Signup = () => {
