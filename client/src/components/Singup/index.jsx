@@ -19,10 +19,6 @@ background-color: rgba(255, 255, 255, 0.8);
 box-shadow: 0 0 40px rgba(80, 58, 92, 2);
 `;
 
-const SignupForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
 
 const FormInput = styled.input`
   margin: 8px 0;
@@ -46,7 +42,15 @@ const SubmitButton = styled.button`
 `;
 
 function SignupComponent(props) {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [formState, setFormState] = useState({
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    owner: false, // Assuming these are boolean values
+    walker: false,
+  });
+  
   const [addUser] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
@@ -57,8 +61,8 @@ function SignupComponent(props) {
         password: formState.password,
         firstName: formState.firstName,
         lastName: formState.lastName,
-        owner:fromState.owner,
-        walker:fromState.walker,
+        owner: formState.owner,
+        walker: formState.walker,
       },
     });
     const token = mutationResponse.data.addUser.token;
@@ -73,10 +77,13 @@ function SignupComponent(props) {
     });
   };
 
+  //<Dashboard></Dashboard>
+  //<AuthProvider></AuthProvider>
+  
   return (
     <SignupContainer>
     <div className="container my-1">
-      <AuthProvider></AuthProvider>
+      
       <Link to="/login">← Go to Login</Link>
 
       <h2>Signup</h2>
