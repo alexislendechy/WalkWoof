@@ -1,5 +1,4 @@
-
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type Type {
@@ -9,9 +8,10 @@ const typeDefs = gql`
 
   type User {
     id: ID!
-    name: String!
+    username: String!
     email: String!
     password: String!
+    role: String!
   }
 
   type Walker {
@@ -47,12 +47,17 @@ const typeDefs = gql`
     user(username: String!): User
     walker(username: String!): Walker
   }
-
   type Mutation {
-    addUser(name: String!, email: String!, password: String!): AuthPayload
+    addUser(
+      username: String!
+      email: String!
+      password: String!
+      role: String!
+    ): AuthPayload
     login(email: String!, password: String!): AuthPayload
     addComment(text: String!): Comment
     removeComment(id: ID!): Comment
+    removeUser(id: ID!): User
   }
 `;
 
