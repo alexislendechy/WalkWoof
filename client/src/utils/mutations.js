@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
@@ -23,20 +23,59 @@ export const LOGIN = gql`
   }
 `;
 export const ADD_USER = gql`
+<<<<<<< HEAD
   mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(name: $name, email: $email, password: $password) {
+=======
+  mutation addUser(
+    $username: String!
+    $email: String!
+    $password: String!
+    $role: String! # Include the 'role' input variable
+  ) {
+    addUser(
+      username: $username
+      email: $email
+      password: $password
+      role: $role
+    ) {
+>>>>>>> 162af9b59b9a67f44de611a820d20d1dfaf20d3d
       token
       user {
         _id
         username
+        role # Include the 'role' field in the response if needed
       }
     }
   }
 `;
-
 export const ADD_OWNER_PROFILE = gql`
-  mutation addOwnerProfile($ownerName: String!, $ownerEmail: String!, $ownerPhone: String!, $ownerAddress: String!, $ownerCity: String!, $ownerState: String!, $ownerZip: String!, $ownerCountry: String!, $ownerWebsite: String!, $ownerDescription: String!, $ownerImage: String!) {
-    addOwnerProfile(ownerName: $ownerName, ownerEmail: $ownerEmail, ownerPhone: $ownerPhone, ownerAddress: $ownerAddress, ownerCity: $ownerCity, ownerState: $ownerState, ownerZip: $ownerZip, ownerCountry: $ownerCountry, ownerWebsite: $ownerWebsite, ownerDescription: $ownerDescription, ownerImage: $ownerImage) {
+  mutation addOwnerProfile(
+    $ownerName: String!
+    $ownerEmail: String!
+    $ownerPhone: String!
+    $ownerAddress: String!
+    $ownerCity: String!
+    $ownerState: String!
+    $ownerZip: String!
+    $ownerCountry: String!
+    $ownerWebsite: String!
+    $ownerDescription: String!
+    $ownerImage: String!
+  ) {
+    addOwnerProfile(
+      ownerName: $ownerName
+      ownerEmail: $ownerEmail
+      ownerPhone: $ownerPhone
+      ownerAddress: $ownerAddress
+      ownerCity: $ownerCity
+      ownerState: $ownerState
+      ownerZip: $ownerZip
+      ownerCountry: $ownerCountry
+      ownerWebsite: $ownerWebsite
+      ownerDescription: $ownerDescription
+      ownerImage: $ownerImage
+    ) {
       _id
       ownerName
       ownerEmail
@@ -50,36 +89,79 @@ export const ADD_OWNER_PROFILE = gql`
       ownerDescription
       ownerImage
     }
-  }`;
+  }
+`;
 
-  export const ADD_PET_PROFILE = gql`
-    mutation addPetProfile($petName: String!, $petType: String!, $petBreed: String!, $petAge: String!, $petGender: String!, $petDescription: String!, $petImage: String!) {
-      addPetProfile(petName: $petName, petType: $petType, petBreed: $petBreed, petAge: $petAge, petGender: $petGender, petDescription: $petDescription, petImage: $petImage) {
-        _id
-        petName
-        petType
-        petBreed
-        petAge
-        petGender
-        petDescription
-        petImage
-      }
-    }`;
+export const ADD_PET_PROFILE = gql`
+  mutation addPetProfile(
+    $petName: String!
+    $petType: String!
+    $petBreed: String!
+    $petAge: String!
+    $petGender: String!
+    $petDescription: String!
+    $petImage: String!
+  ) {
+    addPetProfile(
+      petName: $petName
+      petType: $petType
+      petBreed: $petBreed
+      petAge: $petAge
+      petGender: $petGender
+      petDescription: $petDescription
+      petImage: $petImage
+    ) {
+      _id
+      petName
+      petType
+      petBreed
+      petAge
+      petGender
+      petDescription
+      petImage
+    }
+  }
+`;
 
-    export const ADD_WALKER_PROFILE = gql`
-    mutation addWalkerProfile($walkerName: String!, $walkerEmail: String!, $walkerPhone: String!, $walkerAddress: String!, $walkerCity: String!, $walkerState: String!, $walkerZip: String!, $walkerCountry: String!, $walkerWebsite: String!, $walkerDescription: String!, $walkerImage: String!) {
-      addWalkerProfile(walkerName: $walkerName, walkerEmail: $walkerEmail, walkerPhone: $walkerPhone, walkerAddress: $walkerAddress, walkerCity: $walkerCity, walkerState: $walkerState, walkerZip: $walkerZip, walkerCountry: $walkerCountry, walkerWebsite: $walkerWebsite, walkerDescription: $walkerDescription, walkerImage: $walkerImage) {
-        _id
-        walkerName
-        walkerEmail
-        walkerPhone
-        walkerAddress
-        walkerCity
-        walkerState
-        walkerZip
-        walkerCountry
-        walkerWebsite
-        walkerDescription
-        walkerImage
-      }
-    }`;
+export const ADD_WALKER_PROFILE = gql`
+  mutation addWalkerProfile(
+    $walkerName: String!
+    $walkerEmail: String!
+    $walkerPhone: String!
+    $walkerAddress: String!
+    $walkerCity: String!
+    $walkerState: String!
+    $walkerZip: String!
+    $walkerCountry: String!
+    $walkerWebsite: String!
+    $walkerDescription: String!
+    $walkerImage: String!
+  ) {
+    addWalkerProfile(
+      walkerName: $walkerName
+      walkerEmail: $walkerEmail
+      walkerPhone: $walkerPhone
+      walkerAddress: $walkerAddress
+      walkerCity: $walkerCity
+      walkerState: $walkerState
+      walkerZip: $walkerZip
+      walkerCountry: $walkerCountry
+      walkerWebsite: $walkerWebsite
+      walkerDescription: $walkerDescription
+      walkerImage: $walkerImage
+    ) {
+      _id
+      walkerName
+      walkerEmail
+      walkerPhone
+      walkerAddress
+      walkerCity
+      walkerState
+      walkerZip
+      walkerCountry
+      walkerWebsite
+      walkerDescription
+      walkerImage
+    }
+  }
+`;

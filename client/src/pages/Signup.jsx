@@ -6,11 +6,9 @@ import { AuthProvider } from "../Contexts/AuthContext";
 const Signup = () => {
   return (
     <AuthProvider>
-    <div className="container">
-
-      <SignupComponent/>
-
-    </div>
+      <div className="container">
+        <SignupComponent />
+      </div>
     </AuthProvider>
   );
 };
