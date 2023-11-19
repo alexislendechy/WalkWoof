@@ -8,8 +8,10 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, { username, email, password, role }) => {
       try {
+        console.log("Adding user:", { username, email, role }); // Log input data
         const user = await User.create({ username, email, password, role });
         const token = signToken(user);
+        console.log("User added successfully:", user); // Log user data
         return { token, user };
       } catch (error) {
         console.error("Error adding user:", error);
@@ -18,15 +20,19 @@ const resolvers = {
     },
     login: async (parent, { email, password }) => {
       try {
+        console.log("User attempting to log in:", { email }); // Log login attempt
         const user = await User.findOne({ email });
         if (!user) {
+          console.error("User not found for email:", email);
           throw new AuthenticationError("Incorrect credentials");
         }
         const correctPw = await user.isCorrectPassword(password);
         if (!correctPw) {
+          console.error("Incorrect password for user:", email);
           throw new AuthenticationError("Incorrect credentials");
         }
         const token = signToken(user);
+        console.log("User logged in successfully:", user); // Log successful login
         return { token, user };
       } catch (error) {
         console.error("Error logging in:", error);
@@ -37,16 +43,16 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError("Not logged in");
       }
-      // Ensure the current user has permission to delete the user
-      // This is a placeholder check, replace with actual authorization logic
       if (context.user.role !== "admin") {
         throw new AuthenticationError("Unauthorized");
       }
       try {
+        console.log("Removing user:", { username, email }); // Log removal attempt
         const user = await User.findOneAndDelete({ username, email });
         if (!user) {
           throw new Error("User not found");
         }
+        console.log("User removed successfully:", user); // Log successful removal
         return user;
       } catch (error) {
         console.error("Error removing user:", error);

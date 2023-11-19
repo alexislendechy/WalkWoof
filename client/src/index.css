@@ -70,7 +70,6 @@ p {
 }
 
 a {
-  color: var(--tertiary);
   text-decoration: none;
   font-weight: bold;
 }

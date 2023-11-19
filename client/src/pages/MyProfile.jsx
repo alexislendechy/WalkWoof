@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-
-import PetWalker from '../components/CreateOwner';
+import WalkerProfile from '../components/WalkerProfile';
+import PetProfiles from '../components/PetProfiles';
 import SearchBar from '../components/SearchBar';
 
 // Define a keyframe animation for the HomeContainer
@@ -36,8 +36,8 @@ const ProfileContainer = styled.div`
 const MyProfile = () => {
   return (
     <ProfileContainer>
-      <SearchBar/>
-      <PetWalker />
+      <WalkerProfile/>
+      <PetProfiles />
 
     </ProfileContainer>
   );

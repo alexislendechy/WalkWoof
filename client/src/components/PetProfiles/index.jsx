@@ -1,10 +1,10 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-//import { GET_PET_PROFILE } from '../utils/queries';
+import { GET_PET_PROFILES } from '../../utils/queries';
 
 const PetProfileView = ({ petId }) => {
   // Use a GraphQL query to fetch pet profile information
-  const { loading, error, data } = useQuery(GET_PET_PROFILE, {
+  const { loading, error, data } = useQuery(GET_PET_PROFILES, {
     variables: { petId },
   });
 

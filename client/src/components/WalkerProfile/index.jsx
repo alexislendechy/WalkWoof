@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_WALKER_PROFILE } from '../utils/queries.js';
+import { GET_WALKER_PROFILES } from '../../utils/queries.js';
 import styled, { keyframes } from 'styled-components';
 
 // Define a keyframe animation for the ProfileContainer
@@ -32,7 +32,7 @@ const ProfileContainer = styled.div`
 
 const WalkerProfileView = ({ walkerId }) => {
   // Use a GraphQL query to fetch walker profile information
-  const { loading, error, data } = useQuery(GET_WALKER_PROFILE, {
+  const { loading, error, data } = useQuery(GET_WALKER_PROFILES, {
     variables: { walkerId },
   });
 
