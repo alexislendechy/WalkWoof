@@ -9,16 +9,15 @@ import Dashboard from "../../components/Dashboard";
 import styled from 'styled-components';
 
 const SignupContainer = styled.div`
-max-width: 400px;
-margin: auto;
-margin-top: 80px;
-margin-bottom: 80px;
-padding: 20px;
-border-radius: 10px;
-background-color: rgba(255, 255, 255, 0.8);
-box-shadow: 0 0 40px rgba(80, 58, 92, 2);
+  max-width: 400px;
+  margin: auto;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 40px rgba(80, 58, 92, 2);
 `;
-
 
 const FormInput = styled.input`
   margin: 8px 0;
@@ -41,15 +40,14 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-function SignupComponent(props) {
+function SignupComponent() {
   const [formState, setFormState] = useState({
     email: '',
     password: '',
     name: '',
-    owner: false, 
-    walker: false,
+    userType: '', // Added userType to track radio button selection
   });
-  
+
   const [addUser] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
@@ -58,9 +56,8 @@ function SignupComponent(props) {
       variables: {
         email: formState.email,
         password: formState.password,
-        name: formState.name,
-        owner: formState.owner,
-        walker: formState.walker,
+        username: formState.username,
+        role: formState.userType, 
       },
     });
     const token = mutationResponse.data.addUser.token;
@@ -68,83 +65,88 @@ function SignupComponent(props) {
   };
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
+    const { name, value, type, checked } = event.target;
+
+    if (type === 'radio') {
+      setFormState({
+        ...formState,
+        userType: checked ? value : '', // Set userType to the selected value
+      });
+    } else {
+      setFormState({
+        ...formState,
+        [name]: value,
+      });
+    }
   };
 
-
-  
   return (
     <SignupContainer>
-    <div className="container my-1">
-    <Dashboard></Dashboard>
-    <AuthProvider></AuthProvider> 
-      <Link to="/login">← Go to Login</Link>
+      <div className="container my-1">
+        <AuthProvider />
+        <Link to="/login">← Go to Login</Link>
 
-      <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-        <FormLabel htmlFor="name">Full Name:</FormLabel>
-        <FormInput
-            placeholder="Name"
-            name="firstName"
-            type="text"
-            id="firstName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-        <FormLabel htmlFor="email">Email:</FormLabel>
-          <FormInput
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-        <FormLabel htmlFor="pwd">Password:</FormLabel>
-          <FormInput
-            placeholder="******"
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="owner">Owner:</label>
-          <FormInput
-            placeholder="Owner"
-            name="boton"
-            type="radio"
-            id="owner"
-            onChange={handleChange}
-          />
-        </div>
-        <div className='flex-row space-between my-2'>
-          <label htmlFor='walker'>Walker:</label>
-          <FormInput
-            placeholder='Walker'
-            name='boton'
-            type='radio'
-            id='walker'
-            onChange={handleChange}
-          />
+        <h2>Signup</h2>
+        <form onSubmit={handleFormSubmit}>
+          <div className="flex-row space-between my-2">
+            <FormLabel htmlFor="name">Full Name:</FormLabel>
+            <FormInput
+              placeholder="Name"
+              name="username"
+              type="text"
+              id="username"
+              onChange={handleChange}
+            />
           </div>
-        <div className="flex-row flex-end">
-        <SubmitButton type="submit">Submit</SubmitButton>
-        </div>
-      </form>
-    </div>
-    
+          <div className="flex-row space-between my-2">
+            <FormLabel htmlFor="email">Email:</FormLabel>
+            <FormInput
+              placeholder="youremail@test.com"
+              name="email"
+              type="email"
+              id="email"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex-row space-between my-2">
+            <FormLabel htmlFor="pwd">Password:</FormLabel>
+            <FormInput
+              placeholder="******"
+              name="password"
+              type="password"
+              id="pwd"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex-row space-between my-2">
+            <label>
+              <input
+                name="userType"
+                type="radio"
+                value="owner"
+                onChange={handleChange}
+              />
+              Owner
+            </label>
+          </div>
+          <div className='flex-row space-between my-2'>
+            <label>
+              <input
+                name="userType"
+                type="radio"
+                value="walker"
+                onChange={handleChange}
+              />
+              Walker
+            </label>
+          </div>
+          <div className="flex-row flex-end">
+            <SubmitButton type="submit">Submit</SubmitButton>
+          </div>
+        </form>
+      </div>
     </SignupContainer>
   );
 }
-
 
 export default SignupComponent;

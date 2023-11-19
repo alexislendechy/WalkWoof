@@ -16,36 +16,21 @@ export const LOGIN = gql`
     login(email: $email, password: $password) {
       token
       user {
-        _id
+        id
         username
       }
     }
   }
 `;
 export const ADD_USER = gql`
-<<<<<<< HEAD
-  mutation addUser($username: String!, $email: String!, $password: String!) {
-    addUser(name: $name, email: $email, password: $password) {
-=======
-  mutation addUser(
-    $username: String!
-    $email: String!
-    $password: String!
-    $role: String! # Include the 'role' input variable
-  ) {
-    addUser(
-      username: $username
-      email: $email
-      password: $password
-      role: $role
-    ) {
->>>>>>> 162af9b59b9a67f44de611a820d20d1dfaf20d3d
-      token
-      user {
-        _id
-        username
-        role # Include the 'role' field in the response if needed
-      }
+mutation addUser($username: String!, $email: String!, $password: String!, $role: String!) {
+  addUser(username: $username, email: $email, password: $password, role: $role) {
+    token
+    user {
+      id
+      username
+      role
+    }
     }
   }
 `;
