@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NoMatch from './pages/NoMatch.jsx';
 import MyProfile from './pages/MyProfile.jsx';
+import CreatePet from './pages/CreatePet.jsx';
 //import SearchResults from './pages/SearchResults';
 //import Payments from './pages/Payments';
 import AuthContext from './Contexts/AuthContext';
@@ -54,6 +55,11 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <MyProfile />,
+        errorElement: <h1 className="display-2">Wrong page!</h1>,
+      },
+      {
+        path: "/profile/createPet",
+        element: <CreatePet />,
         errorElement: <h1 className="display-2">Wrong page!</h1>,
       },
     ]

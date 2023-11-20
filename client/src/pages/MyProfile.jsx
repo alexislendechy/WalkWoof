@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import WalkerProfile from '../components/WalkerProfile';
+import { Link } from 'react-router-dom';
 import PetProfiles from '../components/PetProfiles';
-import SearchBar from '../components/SearchBar';
+import ProfilePic from '../components/ProfilePic';
 
 // Define a keyframe animation for the HomeContainer
 const gradientAnimation = keyframes`
@@ -23,7 +23,7 @@ const ProfileContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Adjust the height based on your needs */
+  height: 100vh; 
   padding: 30px;
   background-image: linear-gradient(to bottom right, #b88aad, #f7ddb7, #c995aa);
   border-radius: 10px;
@@ -31,13 +31,14 @@ const ProfileContainer = styled.div`
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   animation: ${gradientAnimation} 10s linear infinite; 
 `;
-
+//<WalkerProfile/>
 
 const MyProfile = () => {
   return (
     <ProfileContainer>
-      <WalkerProfile/>
+      <ProfilePic/>
       <PetProfiles />
+      <Link to="./createpet"> Add a new lovable pet!</Link>
 
     </ProfileContainer>
   );

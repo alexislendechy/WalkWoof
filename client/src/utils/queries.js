@@ -2,15 +2,15 @@ import {gql} from '@apollo/client';
 
 export const GET_PET_PROFILES = gql`
     query getPetProfiles {
-        petProfiles {
-        _id
-        petName
-        petType
-        petBreed
-        petAge
-        petGender
-        petDescription
-        petImage
+        getPetProfiles {
+            id
+            name: petName  
+            breed: petBreed  
+            age: petAge  
+            size: petSize  
+            petGender
+            petDescription
+            petImage
         }
     }
     `;
@@ -18,7 +18,7 @@ export const GET_PET_PROFILES = gql`
 export const GET_WALKER_PROFILES = gql`
     query getWalkerProfiles {
         walkerProfiles {
-        _id
+        id
         walkerName
         walkerEmail
         walkerPhone
