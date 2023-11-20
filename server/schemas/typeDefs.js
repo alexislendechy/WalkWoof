@@ -41,23 +41,39 @@ const typeDefs = gql`
     user: User!
   }
 
+  type PetProfile {
+    id: ID!
+    petName: String!  
+    petBreed: String!  
+    petAge: Int!  
+    petSize: String!  
+    petGender: String!
+    petDescription: String!
+    petImage: String!
+  }
+
   type Query {
     walkers: [Walker]
     users: [User]
     user(username: String!): User
     walker(username: String!): Walker
+    getPetProfile(petId: ID!): PetProfile  # Add a query for fetching a single pet profile
+    getPetProfiles: [PetProfile]  # Add a query for fetching all pet profiles
   }
+
   type Mutation {
-    addUser(
-      username: String!
-      email: String!
-      password: String!
-      role: String!
-    ): AuthPayload
+    addUser(username: String!, email: String!, password: String!, role: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
     addComment(text: String!): Comment
     removeComment(id: ID!): Comment
     removeUser(id: ID!): User
+
+    addPetProfile(
+      name: String!
+      breed: String!
+      age: Int!
+      size: String!
+    ): PetProfile  # Add a mutation for adding a new pet profile
   }
 `;
 

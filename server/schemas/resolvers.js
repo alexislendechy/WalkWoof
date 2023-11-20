@@ -1,9 +1,31 @@
 const User = require("../models/User");
+const PetProfile = require('../models/Dogs');
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // Define query resolvers if needed
+    // Define query resolvers
+    getPetProfile: async (parent, { petId }) => {
+      try {
+        const petProfile = await PetProfile.findById(petId);
+        if (!petProfile) {
+          throw new Error("Pet profile not found");
+        }
+        return petProfile;
+      } catch (error) {
+        console.error("Error fetching pet profile:", error);
+        throw new Error("Error fetching pet profile");
+      }
+    },
+    getPetProfiles: async () => {
+      try {
+        const petProfiles = await PetProfile.find();
+        return petProfiles;
+      } catch (error) {
+        console.error("Error fetching pet profiles:", error);
+        throw new Error("Error fetching pet profiles absbsd");
+      }
+    },
   },
   Mutation: {
     addUser: async (parent, { username, email, password, role }) => {
@@ -59,7 +81,23 @@ const resolvers = {
         throw new Error("Error deleting user");
       }
     },
+    addPetProfile: async (parent, { name, breed, age, size }) => {
+      try {
+        console.log("Adding pet profile:", { name, breed, age, size });
+        const petProfile = await PetProfile.create({ name, breed, age, size });
+        console.log("Pet profile added successfully:", petProfile);
+    
+        // Map MongoDB _id to GraphQL id
+        const { _id, ...rest } = petProfile.toObject();
+        const petProfileWithId = { id: _id.toString(), ...rest };
+    
+        return petProfileWithId;
+      } catch (error) {
+        console.error("Error adding pet profile:", error);
+        throw new Error("Error adding pet profile");
+      }
+    },
   },
-};
+}
 
 module.exports = resolvers;
