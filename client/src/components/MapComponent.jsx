@@ -1,14 +1,18 @@
-// MapComponent.js
+import "leaflet/dist/leaflet.css";
 import React, { useState, useEffect } from "react";
-import { useMutation } from "@apollo/client";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { UPDATE_USER_ADDRESS } from "../utils/mutations";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 
-const MapComponent = ({ userId }) => {
+// Component to update map center
+const ChangeView = ({ center }) => {
+  const map = useMap();
+  map.setView(center);
+  return null;
+};
+
+const MapComponent = () => {
   const [searchText, setSearchText] = useState("");
   const [coordinates, setCoordinates] = useState(null);
   const [mapInitError, setMapInitError] = useState(null);
-  const [updateUserAddress] = useMutation(UPDATE_USER_ADDRESS);
 
   useEffect(() => {
     if (coordinates) {
@@ -16,22 +20,12 @@ const MapComponent = ({ userId }) => {
     }
   }, [coordinates]);
 
-  const handleGeocode = () => {
+  const handleGeocode = (address) => {
     const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ address: searchText }, (results, status) => {
+    geocoder.geocode({ address }, (results, status) => {
       if (status === "OK" && results.length > 0) {
         const location = results[0].geometry.location;
-        setCoordinates(location);
-
-        // Call the mutation to update the user's address
-        updateUserAddress({
-          variables: {
-            userId: userId,
-            address: searchText,
-          },
-        }).catch((err) => {
-          console.error("Error updating address:", err);
-        });
+        setCoordinates({ lat: location.lat(), lng: location.lng() });
       } else {
         setCoordinates(null);
         setMapInitError(`Geocoding failed: ${status}`);
@@ -42,32 +36,40 @@ const MapComponent = ({ userId }) => {
 
   return (
     <div>
-      <h1>Map</h1>
-      <input
-        type="text"
-        placeholder="Enter an address or location"
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-      />
-      <button onClick={handleGeocode}>Go to Address</button>
+      <h1>MAP</h1>
+      <div>
+        <input
+          type="text"
+          placeholder="Enter an address or location"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <button onClick={() => handleGeocode(searchText)}>
+          Go to address!
+        </button>
+      </div>
 
-      {mapInitError && <p>Error initializing the map: {mapInitError}</p>}
-      {coordinates && (
+      {mapInitError ? (
+        <p>Error initializing the map: {mapInitError}</p>
+      ) : (
         <MapContainer
-          center={{ lat: coordinates.lat(), lng: coordinates.lng() }}
+          center={coordinates || { lat: 0, lng: 0 }}
           zoom={13}
-          style={{ height: "500px", width: "100%" }}
+          style={{ height: "400px", width: "600px" }}
         >
+          <ChangeView center={coordinates || { lat: 0, lng: 0 }} />
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          <Marker position={{ lat: coordinates.lat(), lng: coordinates.lng() }}>
-            <Popup>
-              Location: {searchText} <br />
-              Coordinates: {coordinates.lat()}, {coordinates.lng()}
-            </Popup>
-          </Marker>
+          {coordinates && (
+            <Marker position={coordinates}>
+              <Popup>
+                Address: {searchText} <br />
+                Coordinates: {coordinates.lat}, {coordinates.lng}
+              </Popup>
+            </Marker>
+          )}
         </MapContainer>
       )}
     </div>

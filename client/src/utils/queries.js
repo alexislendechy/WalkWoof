@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const GET_PET_PROFILES = gql`
   query getPetProfiles {
     getPetProfiles {
-      _id
+      id
       petName
       petBreed
       petAge
@@ -18,7 +18,7 @@ export const GET_PET_PROFILES = gql`
 export const GET_WALKER_PROFILES = gql`
   query getWalkerProfiles {
     walkerProfiles {
-      _id
+      id
       walkerName
       walkerEmail
       walkerPhone
@@ -37,7 +37,7 @@ export const GET_WALKER_PROFILES = gql`
 export const GET_OWNER_PROFILES = gql`
   query getOwnerProfiles {
     ownerProfiles {
-      _id
+      id
       ownerName
       ownerEmail
       ownerPhone
@@ -56,7 +56,7 @@ export const GET_OWNER_PROFILES = gql`
 export const GET_USER = gql`
   query getUser($id: ID!) {
     user(id: $id) {
-      _id
+      id
       username
       email
       role

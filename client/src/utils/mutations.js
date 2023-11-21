@@ -5,7 +5,7 @@ export const LOGIN_USER = gql`
     login(email: $email, password: $password) {
       token
       user {
-        _id
+        id
         username
       }
     }
@@ -44,12 +44,9 @@ export const ADD_USER = gql`
     }
   }
 `;
-
 export const UPDATE_USER_ADDRESS = gql`
-  mutation updateUserAddress($userId: ID!, $address: String!) {
-    updateUserAddress(userId: $userId, address: $address) {
-      _id
-      username
+  mutation updateUserAddress($id: ID!, $address: String!) {
+    updateUserAddress(id: $id, address: $address) {
       address
     }
   }

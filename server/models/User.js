@@ -52,6 +52,13 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 userSchema.index({ username: 1, email: 1 }, { unique: true });
 
+userSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+userSchema.set("toJSON", {
+  virtuals: true, // Include virtuals when document is converted to JSON
+});
+
 const User = model("User", userSchema);
 
 module.exports = User;

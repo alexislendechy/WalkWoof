@@ -42,7 +42,7 @@ const resolvers = {
 
         // Return the user object
         return {
-          _id: user._id,
+          id: user.id,
           username: user.username,
           email: user.email,
           role: user.role,
@@ -113,7 +113,27 @@ const resolvers = {
         throw new Error("Error adding pet profile");
       }
     },
-    // Add any other mutations if needed
+    updateUserAddress: async (_, { id, address }) => {
+      try {
+        const updatedUser = await User.findByIdAndUpdate(
+          id,
+          { address },
+          { new: true } // Return the updated user object
+        );
+
+        if (!updatedUser) {
+          throw new Error("User not found");
+        }
+
+        return {
+          address: updatedUser.address,
+          // include any other fields required in the response
+        };
+      } catch (error) {
+        console.error("Error updating user address:", error);
+        throw new Error("Error updating user address");
+      }
+    },
   },
 };
 
