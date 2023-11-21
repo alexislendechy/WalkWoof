@@ -52,14 +52,15 @@ export const GET_OWNER_PROFILES = gql`
     }
     `;
     export const GET_USER = gql`
-    query getUser {
-        user {
-        _id
+    query getUser($token: String!) {
+      user(token: $token) {
+        id
         username
         email
-        }
+      }
     }
-    `;
+  `;
+ 
     export const QUERY_CHECKOUT = gql`
     query getCheckout($petId: ID!) {
         checkout(petId: $petId) {

@@ -26,6 +26,19 @@ const resolvers = {
         throw new Error("Error fetching pet profiles absbsd");
       }
     },
+    user: (parent, args, context) => {
+      // Extract user information from the context or args.token
+      const token = args.token || context.token;
+
+      // Validate and decode the token
+      // For simplicity, you might want to use a library like jsonwebtoken
+      const decodedToken = verifyToken(token);
+
+      // Use the decoded token information to fetch the user
+      const user = fetchUserById(decodedToken.id); // Adjust this line based on your data fetching logic
+
+      return user;
+    },
   },
   Mutation: {
     addUser: async (parent, { username, email, password, role }) => {
@@ -81,17 +94,22 @@ const resolvers = {
         throw new Error("Error deleting user");
       }
     },
-    addPetProfile: async (parent, { name, breed, age, size }) => {
+    addPetProfile: async (_, { name, breed, age, size }) => {
       try {
         console.log("Adding pet profile:", { name, breed, age, size });
+
         const petProfile = await PetProfile.create({ name, breed, age, size });
+
         console.log("Pet profile added successfully:", petProfile);
-    
-        // Map MongoDB _id to GraphQL id
-        const { _id, ...rest } = petProfile.toObject();
-        const petProfileWithId = { id: _id.toString(), ...rest };
-    
-        return petProfileWithId;
+
+        // Return the necessary fields in the response
+        return {
+          id: petProfile._id.toString(),
+          petName: petProfile.name,
+          petBreed: petProfile.breed,
+          petAge: petProfile.age,
+          petSize: petProfile.size,
+        };
       } catch (error) {
         console.error("Error adding pet profile:", error);
         throw new Error("Error adding pet profile");

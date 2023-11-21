@@ -15,6 +15,7 @@ const SignupContainer = styled.div`
 `;
 
 const FormInput = styled.input`
+font-size: 16px;
   margin: 8px 0;
   padding: 10px;
   border: 1px solid #ccc;
@@ -48,10 +49,9 @@ const PetProfile = () => {
     name: '',
     breed: '',
     age: '',
-    size: '',
-    gender: '', // Add gender field
-    description: '', // Add description field
-    image: '', // Add image field
+    size: 'Small',
+    gender: '', 
+    description: '', 
   });
 
   // Mutation to add a new pet profile
@@ -91,7 +91,7 @@ const PetProfile = () => {
         name: '',
         breed: '',
         age: '',
-        size: '',
+        size: 'Small',
         gender: '',
         description: '',
         image: '',
@@ -116,6 +116,7 @@ const PetProfile = () => {
               name="name"
               value={petProfile.name}
               onChange={handleInputChange}
+              placeholder="Name of your friend"
             />
           </div>
           <div>
@@ -126,6 +127,7 @@ const PetProfile = () => {
               name="breed"
               value={petProfile.breed}
               onChange={handleInputChange}
+              placeholder="Ex= Chihuahua"
             />
           </div>
           <div>
@@ -136,22 +138,25 @@ const PetProfile = () => {
               name="age"
               value={petProfile.age}
               onChange={handleInputChange}
+              placeholder="Only use numbers"
             />
           </div>
           <div>
           <div>
   <FormLabel htmlFor="size">Size:</FormLabel>
   <FormSelect
-    id="size"
-    name="size"
-    value={petProfile.size}
-    onChange={handleInputChange}
-  >
-    <option value="Small">Small</option>
-    <option value="Medium">Medium</option>
-    <option value="Big">Big</option>
-    <option value="Giant">Giant</option>
-  </FormSelect>
+        id="size"
+        name="size"
+        value={petProfile.size}
+        onChange={handleInputChange}
+        
+      >
+        <option value="Small">Small</option>
+        <option value="Medium">Medium</option>
+        <option value="Big">Big</option>
+        <option value="Giant">Giant</option>
+        
+      </FormSelect>
 </div>
             <FormLabel htmlFor="gender">Gender:</FormLabel>
             <FormInput
@@ -160,6 +165,7 @@ const PetProfile = () => {
               name="gender"
               value={petProfile.gender}
               onChange={handleInputChange}
+              placeholder="Gender of your pet"
             />
           </div>
           <div>
@@ -170,6 +176,7 @@ const PetProfile = () => {
               name="description"
               value={petProfile.description}
               onChange={handleInputChange}
+              placeholder="Tell us more about your pet"
             />
           </div>
           <div>
@@ -180,6 +187,7 @@ const PetProfile = () => {
               name="image"
               value={petProfile.image}
               onChange={handleInputChange}
+              placeholder="Upload a picture"
             />
           </div>
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const verifyRole = require('./utils/roleMiddleware');
+const verifyRole = require('./utils/roles');
 
 const app = express();
 
