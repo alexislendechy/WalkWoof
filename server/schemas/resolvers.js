@@ -9,7 +9,12 @@ const resolvers = {
     addUser: async (parent, { username, email, password, role }) => {
       try {
         console.log("Adding user:", { username, email, role }); // Log input data
-        const user = await User.create({ username, email, password, role });
+        const user = await User.create({
+          username,
+          email,
+          password,
+          role,
+        });
         const token = signToken(user);
         console.log("User added successfully:", user); // Log user data
         return { token, user };

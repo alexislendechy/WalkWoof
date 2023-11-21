@@ -26,6 +26,11 @@ const userSchema = new Schema(
       enum: ["owner", "admin", "walker"],
       default: "owner",
     },
+    address: {
+      type: String,
+      required: false,
+      default: "N/A",
+    },
   },
   {
     timestamps: true, // Automatically manage createdAt and updatedAt fields

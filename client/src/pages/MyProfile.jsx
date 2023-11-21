@@ -1,8 +1,8 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
-import WalkerProfile from '../components/WalkerProfile';
-import PetProfiles from '../components/PetProfiles';
-import SearchBar from '../components/SearchBar';
+import React from "react";
+import styled, { keyframes } from "styled-components";
+import WalkerProfile from "../components/WalkerProfile/index.jsx";
+import PetProfiles from "../components/PetProfiles";
+import MapComponent from "../components/MapComponent";
 
 // Define a keyframe animation for the HomeContainer
 const gradientAnimation = keyframes`
@@ -29,16 +29,14 @@ const ProfileContainer = styled.div`
   border-radius: 10px;
   backdrop-filter: blur(15px);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  animation: ${gradientAnimation} 10s linear infinite; 
+  animation: ${gradientAnimation} 10s linear infinite;
 `;
-
 
 const MyProfile = () => {
   return (
     <ProfileContainer>
-      <WalkerProfile/>
-      <PetProfiles />
-
+      <MapComponent />
+      <WalkerProfile />
     </ProfileContainer>
   );
 };

@@ -1,12 +1,12 @@
 import React from "react";
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import Auth from '../../utils/auth';
-import { ADD_USER } from '../../utils/mutations';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import Auth from "../../utils/auth";
+import { ADD_USER } from "../../utils/mutations";
 import { AuthProvider } from "../../Contexts/AuthContext";
 import Dashboard from "../../components/Dashboard";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const SignupContainer = styled.div`
   max-width: 400px;
@@ -42,10 +42,10 @@ const SubmitButton = styled.button`
 
 function SignupComponent() {
   const [formState, setFormState] = useState({
-    email: '',
-    password: '',
-    name: '',
-    userType: '', // Added userType to track radio button selection
+    email: "",
+    password: "",
+    name: "",
+    userType: "", // Added userType to track radio button selection
   });
 
   const [addUser] = useMutation(ADD_USER);
@@ -57,7 +57,7 @@ function SignupComponent() {
         email: formState.email,
         password: formState.password,
         username: formState.username,
-        role: formState.userType, 
+        role: formState.userType,
       },
     });
     const token = mutationResponse.data.addUser.token;
@@ -67,10 +67,10 @@ function SignupComponent() {
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
 
-    if (type === 'radio') {
+    if (type === "radio") {
       setFormState({
         ...formState,
-        userType: checked ? value : '', // Set userType to the selected value
+        userType: checked ? value : "", // Set userType to the selected value
       });
     } else {
       setFormState({
@@ -89,7 +89,7 @@ function SignupComponent() {
         <h2>Signup</h2>
         <form onSubmit={handleFormSubmit}>
           <div className="flex-row space-between my-2">
-            <FormLabel htmlFor="name">Full Name:</FormLabel>
+            <FormLabel htmlFor="name"> Username:</FormLabel>
             <FormInput
               placeholder="Name"
               name="username"
@@ -129,7 +129,7 @@ function SignupComponent() {
               Owner
             </label>
           </div>
-          <div className='flex-row space-between my-2'>
+          <div className="flex-row space-between my-2">
             <label>
               <input
                 name="userType"

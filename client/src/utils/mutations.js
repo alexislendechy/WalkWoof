@@ -23,17 +23,38 @@ export const LOGIN = gql`
   }
 `;
 export const ADD_USER = gql`
-mutation addUser($username: String!, $email: String!, $password: String!, $role: String!) {
-  addUser(username: $username, email: $email, password: $password, role: $role) {
-    token
-    user {
-      id
-      username
-      role
-    }
+  mutation addUser(
+    $username: String!
+    $email: String!
+    $password: String!
+    $role: String!
+  ) {
+    addUser(
+      username: $username
+      email: $email
+      password: $password
+      role: $role
+    ) {
+      token
+      user {
+        id
+        username
+        role
+      }
     }
   }
 `;
+
+export const UPDATE_USER_ADDRESS = gql`
+  mutation updateUserAddress($userId: ID!, $address: String!) {
+    updateUserAddress(userId: $userId, address: $address) {
+      _id
+      username
+      address
+    }
+  }
+`;
+
 export const ADD_OWNER_PROFILE = gql`
   mutation addOwnerProfile(
     $ownerName: String!

@@ -12,6 +12,7 @@ const typeDefs = gql`
     email: String!
     password: String!
     role: String!
+    address: String!
   }
 
   type Walker {
