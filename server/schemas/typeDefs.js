@@ -12,6 +12,7 @@ const typeDefs = gql`
     email: String!
     password: String!
     role: String!
+    address: String
   }
 
   type Walker {
@@ -43,10 +44,10 @@ const typeDefs = gql`
 
   type PetProfile {
     id: ID!
-    petName: String!  
-    petBreed: String!  
-    petAge: Int!  
-    petSize: String!  
+    petName: String!
+    petBreed: String!
+    petAge: Int!
+    petSize: String!
     petGender: String!
     petDescription: String!
     petImage: String!
@@ -55,25 +56,33 @@ const typeDefs = gql`
   type Query {
     walkers: [Walker]
     users: [User]
-    user(username: String!): User
+    user(id: ID!): User
     walker(username: String!): Walker
-    getPetProfile(petId: ID!): PetProfile  # Add a query for fetching a single pet profile
-    getPetProfiles: [PetProfile]  # Add a query for fetching all pet profiles
+    getPetProfile(petId: ID!): PetProfile
+    getPetProfiles: [PetProfile]
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!, role: String!): AuthPayload
+    addUser(
+      username: String!
+      email: String!
+      password: String!
+      role: String!
+    ): AuthPayload
     login(email: String!, password: String!): AuthPayload
     addComment(text: String!): Comment
     removeComment(id: ID!): Comment
     removeUser(id: ID!): User
-
     addPetProfile(
-      name: String!
-      breed: String!
-      age: Int!
-      size: String!
-    ): PetProfile  # Add a mutation for adding a new pet profile
+      petName: String!
+      petBreed: String!
+      petAge: Int!
+      petSize: String!
+      petGender: String!
+      petDescription: String!
+      petImage: String!
+    ): PetProfile
+    updateUserAddress(userId: ID!, address: String!): User
   }
 `;
 

@@ -1,10 +1,9 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_USER } from '../../utils/queries';
-import styled from 'styled-components';
-import defaultimg from "../../assets/blank-profile-picture-973460_960_720.webp";
-import Auth from '../../utils/auth';
-
+import React from "react";
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "../../utils/queries.js";
+import styled from "styled-components";
+import defaultImg from "../../assets/default.webp";
+import Auth from "../../utils/auth.js";
 
 const ProfileCardContainer = styled.div`
   height: 30vh;
@@ -22,7 +21,7 @@ const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  object-fit: cover; 
+  object-fit: cover;
   margin-bottom: 8px;
 `;
 
@@ -35,29 +34,37 @@ const ProfileRole = styled.p`
   color: #666;
 `;
 
-
-
 const ProfileCard = () => {
   const token = Auth.getToken();
-  const { data } = useQuery(GET_USER, {
-    variables: {
-      token,
-    },
+  const profile = Auth.getProfile();
+  const userId = profile.authenticatedPerson._id;
+
+  console.log("Token:", token); // Debug log - render
+  console.log("Profile:", profile); // Debug log - get an object
+  const { loading, error, data } = useQuery(GET_USER, {
+    variables: { id: userId },
+    skip: !userId,
   });
 
-  let user;
+  console.log("GraphQL Query Loading:", loading); // Debug log - check loading status
+  console.log("GraphQL Query Error:", error); // Debug log - check for errors
+  console.log("GraphQL Query Data:", data); // Debug log - check received data
 
-  if (data) {
-    user = data.user;
+  if (loading) return <p>Loading...</p>;
+  if (error) {
+    console.error("GraphQL Error:", error); // Detailed error log
+    return <p>Error: {error.message}</p>;
   }
+
+  const user = data?.user;
 
   return (
     <ProfileCardContainer>
       <ProfileImage
-        src={user?.imageUrl || defaultimg}
-        alt={`${user?.name}'s profile`}
+        src={user?.imageUrl || defaultImg}
+        alt={`${user?.username}'s profile`}
       />
-      <ProfileName>Name: {user?.name}</ProfileName>
+      <ProfileName>Name: {user?.username}</ProfileName>
       <ProfileRole>Role: {user?.role}</ProfileRole>
     </ProfileCardContainer>
   );

@@ -26,6 +26,11 @@ const userSchema = new Schema(
       enum: ["owner", "admin", "walker"],
       default: "owner",
     },
+    address: {
+      type: String,
+      required: false,
+      default: "N/A",
+    },
   },
   {
     timestamps: true, // Automatically manage createdAt and updatedAt fields
@@ -46,6 +51,13 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 userSchema.index({ username: 1, email: 1 }, { unique: true });
+
+userSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+userSchema.set("toJSON", {
+  virtuals: true, // Include virtuals when document is converted to JSON
+});
 
 const User = model("User", userSchema);
 

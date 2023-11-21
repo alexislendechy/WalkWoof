@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const PetProfile = require('../models/Dogs');
+const PetProfile = require("../models/Dogs"); // Ensure correct model name
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
@@ -23,30 +23,49 @@ const resolvers = {
         return petProfiles;
       } catch (error) {
         console.error("Error fetching pet profiles:", error);
-        throw new Error("Error fetching pet profiles absbsd");
+        throw new Error("Error fetching pet profiles");
       }
     },
-    user: (parent, args, context) => {
-      // Extract user information from the context or args.token
-      const token = args.token || context.token;
+    user: async (_, { id }) => {
+      try {
+        if (!id) {
+          throw new Error("User ID must be provided");
+        }
 
-      // Validate and decode the token
-      // For simplicity, you might want to use a library like jsonwebtoken
-      const decodedToken = verifyToken(token);
+        // Fetch the user by ID from the database
+        const user = await User.findById(id);
 
-      // Use the decoded token information to fetch the user
-      const user = fetchUserById(decodedToken.id); // Adjust this line based on your data fetching logic
+        // Check if the user exists
+        if (!user) {
+          throw new Error("User not found");
+        }
 
-      return user;
+        // Return the user object
+        return {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          address: user.address,
+          // Include any other fields that are required by your GraphQL schema
+        };
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        throw new Error("Error fetching user");
+      }
     },
+    // Add any other queries if needed
   },
   Mutation: {
     addUser: async (parent, { username, email, password, role }) => {
       try {
-        console.log("Adding user:", { username, email, role }); // Log input data
-        const user = await User.create({ username, email, password, role });
+        const user = await User.create({
+          username,
+          email,
+          password,
+          role,
+        });
         const token = signToken(user);
-        console.log("User added successfully:", user); // Log user data
         return { token, user };
       } catch (error) {
         console.error("Error adding user:", error);
@@ -55,19 +74,15 @@ const resolvers = {
     },
     login: async (parent, { email, password }) => {
       try {
-        console.log("User attempting to log in:", { email }); // Log login attempt
         const user = await User.findOne({ email });
         if (!user) {
-          console.error("User not found for email:", email);
           throw new AuthenticationError("Incorrect credentials");
         }
         const correctPw = await user.isCorrectPassword(password);
         if (!correctPw) {
-          console.error("Incorrect password for user:", email);
           throw new AuthenticationError("Incorrect credentials");
         }
         const token = signToken(user);
-        console.log("User logged in successfully:", user); // Log successful login
         return { token, user };
       } catch (error) {
         console.error("Error logging in:", error);
@@ -82,12 +97,7 @@ const resolvers = {
         throw new AuthenticationError("Unauthorized");
       }
       try {
-        console.log("Removing user:", { username, email }); // Log removal attempt
         const user = await User.findOneAndDelete({ username, email });
-        if (!user) {
-          throw new Error("User not found");
-        }
-        console.log("User removed successfully:", user); // Log successful removal
         return user;
       } catch (error) {
         console.error("Error removing user:", error);
@@ -96,26 +106,35 @@ const resolvers = {
     },
     addPetProfile: async (_, { name, breed, age, size }) => {
       try {
-        console.log("Adding pet profile:", { name, breed, age, size });
-
         const petProfile = await PetProfile.create({ name, breed, age, size });
-
-        console.log("Pet profile added successfully:", petProfile);
-
-        // Return the necessary fields in the response
-        return {
-          id: petProfile._id.toString(),
-          petName: petProfile.name,
-          petBreed: petProfile.breed,
-          petAge: petProfile.age,
-          petSize: petProfile.size,
-        };
+        return petProfile;
       } catch (error) {
         console.error("Error adding pet profile:", error);
         throw new Error("Error adding pet profile");
       }
     },
+    updateUserAddress: async (_, { id, address }) => {
+      try {
+        const updatedUser = await User.findByIdAndUpdate(
+          id,
+          { address },
+          { new: true } // Return the updated user object
+        );
+
+        if (!updatedUser) {
+          throw new Error("User not found");
+        }
+
+        return {
+          address: updatedUser.address,
+          // include any other fields required in the response
+        };
+      } catch (error) {
+        console.error("Error updating user address:", error);
+        throw new Error("Error updating user address");
+      }
+    },
   },
-}
+};
 
 module.exports = resolvers;

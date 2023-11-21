@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/mutations';
-import Auth from '../utils/auth';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "../utils/mutations";
+import Auth from "../utils/auth";
+import styled from "styled-components";
 
 const LoginContainer = styled.div`
   max-width: 400px;
   margin: auto;
   margin-top: 80px;
   margin-bottom: 50vh;
-  
+
   padding: 20px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.8);
@@ -42,7 +42,7 @@ const SubmitButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    color: #fd7e14; 
+    color: #fd7e14;
   }
 `;
 
@@ -51,7 +51,7 @@ const ErrorText = styled.p`
 `;
 
 const Login = () => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error }] = useMutation(LOGIN);
 
   const handleFormSubmit = async (event) => {
@@ -112,6 +112,6 @@ const Login = () => {
       </LoginForm>
     </LoginContainer>
   );
-}
+};
 
 export default Login;
