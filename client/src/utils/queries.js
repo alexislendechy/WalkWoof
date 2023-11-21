@@ -86,4 +86,14 @@ export const GET_OWNER_PROFILES = gql`
         }
     }
     `;
+    export const GET_ALL_APPOINTMENTS = gql`
+    query getAllAppointments {
+        appointmets {
+        _id
+        date
+        time
+        description
+        }
+    }
+    `;
 
