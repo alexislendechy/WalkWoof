@@ -7,7 +7,7 @@ const typeDefs = gql`
   }
 
   type User {
-    id: ID!
+    _id: ID!
     username: String!
     email: String!
     password: String!
@@ -16,7 +16,7 @@ const typeDefs = gql`
   }
 
   type Walker {
-    id: ID!
+    _id: ID!
     name: String!
     email: String!
     password: String!
@@ -24,14 +24,14 @@ const typeDefs = gql`
   }
 
   type Admin {
-    id: ID!
+    _id: ID!
     name: String!
     email: String!
     password: String!
   }
 
   type Comment {
-    id: ID!
+    _id: ID!
     text: String!
     user: User!
     walker: Walker!
@@ -42,12 +42,26 @@ const typeDefs = gql`
     user: User!
   }
 
+  type PetProfile {
+    _id: ID!
+    petName: String!
+    petBreed: String!
+    petAge: Int!
+    petSize: String!
+    petGender: String!
+    petDescription: String!
+    petImage: String!
+  }
+
   type Query {
     walkers: [Walker]
     users: [User]
-    user(username: String!): User
+    user(id: ID!): User
     walker(username: String!): Walker
+    getPetProfile(petId: ID!): PetProfile
+    getPetProfiles: [PetProfile]
   }
+
   type Mutation {
     addUser(
       username: String!
@@ -59,6 +73,13 @@ const typeDefs = gql`
     addComment(text: String!): Comment
     removeComment(id: ID!): Comment
     removeUser(id: ID!): User
+
+    addPetProfile(
+      name: String!
+      breed: String!
+      age: Int!
+      size: String!
+    ): PetProfile
   }
 `;
 

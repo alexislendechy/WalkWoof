@@ -1,14 +1,64 @@
 const User = require("../models/User");
+const PetProfile = require("../models/Dogs"); // Ensure correct model name
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // Define query resolvers if needed
+    // Define query resolvers
+    getPetProfile: async (parent, { petId }) => {
+      try {
+        const petProfile = await PetProfile.findById(petId);
+        if (!petProfile) {
+          throw new Error("Pet profile not found");
+        }
+        return petProfile;
+      } catch (error) {
+        console.error("Error fetching pet profile:", error);
+        throw new Error("Error fetching pet profile");
+      }
+    },
+    getPetProfiles: async () => {
+      try {
+        const petProfiles = await PetProfile.find();
+        return petProfiles;
+      } catch (error) {
+        console.error("Error fetching pet profiles:", error);
+        throw new Error("Error fetching pet profiles");
+      }
+    },
+    user: async (_, { id }) => {
+      try {
+        if (!id) {
+          throw new Error("User ID must be provided");
+        }
+
+        // Fetch the user by ID from the database
+        const user = await User.findById(id);
+
+        // Check if the user exists
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        // Return the user object
+        return {
+          _id: user._id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          address: user.address,
+          // Include any other fields that are required by your GraphQL schema
+        };
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        throw new Error("Error fetching user");
+      }
+    },
+    // Add any other queries if needed
   },
   Mutation: {
     addUser: async (parent, { username, email, password, role }) => {
       try {
-        console.log("Adding user:", { username, email, role }); // Log input data
         const user = await User.create({
           username,
           email,
@@ -16,7 +66,6 @@ const resolvers = {
           role,
         });
         const token = signToken(user);
-        console.log("User added successfully:", user); // Log user data
         return { token, user };
       } catch (error) {
         console.error("Error adding user:", error);
@@ -25,19 +74,15 @@ const resolvers = {
     },
     login: async (parent, { email, password }) => {
       try {
-        console.log("User attempting to log in:", { email }); // Log login attempt
         const user = await User.findOne({ email });
         if (!user) {
-          console.error("User not found for email:", email);
           throw new AuthenticationError("Incorrect credentials");
         }
         const correctPw = await user.isCorrectPassword(password);
         if (!correctPw) {
-          console.error("Incorrect password for user:", email);
           throw new AuthenticationError("Incorrect credentials");
         }
         const token = signToken(user);
-        console.log("User logged in successfully:", user); // Log successful login
         return { token, user };
       } catch (error) {
         console.error("Error logging in:", error);
@@ -52,18 +97,23 @@ const resolvers = {
         throw new AuthenticationError("Unauthorized");
       }
       try {
-        console.log("Removing user:", { username, email }); // Log removal attempt
         const user = await User.findOneAndDelete({ username, email });
-        if (!user) {
-          throw new Error("User not found");
-        }
-        console.log("User removed successfully:", user); // Log successful removal
         return user;
       } catch (error) {
         console.error("Error removing user:", error);
         throw new Error("Error deleting user");
       }
     },
+    addPetProfile: async (_, { name, breed, age, size }) => {
+      try {
+        const petProfile = await PetProfile.create({ name, breed, age, size });
+        return petProfile;
+      } catch (error) {
+        console.error("Error adding pet profile:", error);
+        throw new Error("Error adding pet profile");
+      }
+    },
+    // Add any other mutations if needed
   },
 };
 

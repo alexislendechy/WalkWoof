@@ -6,12 +6,13 @@ const dogSchema = new mongoose.Schema({
   age: Number,
   size: {
     type: String,
-    enum: ['small', 'medium', 'big', 'giant'],
+    enum: ['Small', 'Medium', 'Big', 'Giant'],
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the user who owns the dog
   },
+  
   // Add other dog-related fields here
 });
 

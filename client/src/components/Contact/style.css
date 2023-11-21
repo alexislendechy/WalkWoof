@@ -1,0 +1,52 @@
+#contact {
+    background-color: white;
+    padding: 20%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.1);
+  }
+  
+  #contact h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  textarea{
+    padding: 10px;
+    margin-bottom: 15px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  button[type="submit"]{
+    background-color: rgb(43, 150, 226);
+    width: 150px;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    align-self: center;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+   background-color: orange;
+  }
+  
+  

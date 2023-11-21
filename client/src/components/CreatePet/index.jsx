@@ -1,6 +1,47 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_PET_PROFILE } from '../utils/mutations';
+import { ADD_PET_PROFILE } from '../../utils/mutations';
+import styled from 'styled-components';
+
+const SignupContainer = styled.div`
+  max-width: 400px;
+  margin: auto;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 40px rgba(80, 58, 92, 2);
+`;
+
+const FormInput = styled.input`
+font-size: 16px;
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+
+const FormSelect = styled.select`
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+const FormLabel = styled.label`
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+`;
+
+const SubmitButton = styled.button`
+  background-color: #584372;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+`;
 
 const PetProfile = () => {
   // State to store the pet profile data
@@ -8,7 +49,9 @@ const PetProfile = () => {
     name: '',
     breed: '',
     age: '',
-    size: '', 
+    size: 'Small',
+    gender: '', 
+    description: '', 
   });
 
   // Mutation to add a new pet profile
@@ -31,18 +74,27 @@ const PetProfile = () => {
       // Make a GraphQL mutation to add a new pet profile
       const { data } = await addPetProfile({
         variables: {
-          input: { ...petProfile },
+          petName: petProfile.name,
+          petBreed: petProfile.breed,
+          petAge: parseInt(petProfile.age, 10),
+          petSize: petProfile.size,
+          petGender: petProfile.gender,
+          petDescription: petProfile.description,
+          petImage: petProfile.image,
         },
       });
 
       // Handle success
-      console.log('Pet profile added successfully:', data);
-      // Optionally, you can reset the form or navigate to another page
+      console.log("Pet profile added successfully:", petProfile);
+
       setPetProfile({
         name: '',
         breed: '',
         age: '',
-        size: '', 
+        size: 'Small',
+        gender: '',
+        description: '',
+        image: '',
       });
     } catch (mutationError) {
       // Handle errors
@@ -52,56 +104,100 @@ const PetProfile = () => {
   };
 
   return (
-    <div className="container">
-      <h2>Add Pet Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={petProfile.name}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="breed">Breed:</label>
-          <input
-            type="text"
-            id="breed"
-            name="breed"
-            value={petProfile.breed}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="age">Age:</label>
-          <input
-            type="text"
-            id="age"
-            name="age"
-            value={petProfile.age}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="size">Size:</label>
-          <input
-            type="text"
-            id="size"
-            name="size"
-            value={petProfile.size}
-            onChange={handleInputChange}
-          />
-        </div>
+    <SignupContainer>
+      <div className="container">
+        <h2>Add Pet Profile</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <FormLabel htmlFor="name">Name:</FormLabel>
+            <FormInput
+              type="text"
+              id="name"
+              name="name"
+              value={petProfile.name}
+              onChange={handleInputChange}
+              placeholder="Name of your friend"
+            />
+          </div>
+          <div>
+            <FormLabel htmlFor="breed">Breed:</FormLabel>
+            <FormInput
+              type="text"
+              id="breed"
+              name="breed"
+              value={petProfile.breed}
+              onChange={handleInputChange}
+              placeholder="Ex= Chihuahua"
+            />
+          </div>
+          <div>
+            <FormLabel htmlFor="age">Age:</FormLabel>
+            <FormInput
+              type="text"
+              id="age"
+              name="age"
+              value={petProfile.age}
+              onChange={handleInputChange}
+              placeholder="Only use numbers"
+            />
+          </div>
+          <div>
+          <div>
+  <FormLabel htmlFor="size">Size:</FormLabel>
+  <FormSelect
+        id="size"
+        name="size"
+        value={petProfile.size}
+        onChange={handleInputChange}
+        
+      >
+        <option value="Small">Small</option>
+        <option value="Medium">Medium</option>
+        <option value="Big">Big</option>
+        <option value="Giant">Giant</option>
+        
+      </FormSelect>
+</div>
+            <FormLabel htmlFor="gender">Gender:</FormLabel>
+            <FormInput
+              type="text"
+              id="gender"
+              name="gender"
+              value={petProfile.gender}
+              onChange={handleInputChange}
+              placeholder="Gender of your pet"
+            />
+          </div>
+          <div>
+            <FormLabel htmlFor="description">Description:</FormLabel>
+            <FormInput
+              type="text"
+              id="description"
+              name="description"
+              value={petProfile.description}
+              onChange={handleInputChange}
+              placeholder="Tell us more about your pet"
+            />
+          </div>
+          <div>
+            <FormLabel htmlFor="image">Image:</FormLabel>
+            <FormInput
+              type="text"
+              id="image"
+              name="image"
+              value={petProfile.image}
+              onChange={handleInputChange}
+              placeholder="Upload a picture"
+            />
+          </div>
 
-        <div>
-          <button type="submit">Add Pet Profile</button>
-        </div>
-      </form>
-      {error && <p>Error: {error.message}</p>}
-    </div>
+          <div>
+            <SubmitButton type="submit">Add pet profile!</SubmitButton>
+          </div>
+        </form>
+        {error && <p>Error: {error.message}</p>}
+      </div>
+    </SignupContainer>
   );
 };
 

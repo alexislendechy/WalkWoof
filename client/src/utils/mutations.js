@@ -101,30 +101,21 @@ export const ADD_OWNER_PROFILE = gql`
 export const ADD_PET_PROFILE = gql`
   mutation addPetProfile(
     $petName: String!
-    $petType: String!
     $petBreed: String!
-    $petAge: String!
-    $petGender: String!
-    $petDescription: String!
-    $petImage: String!
+    $petAge: Int!
+    $petSize: String!
   ) {
     addPetProfile(
-      petName: $petName
-      petType: $petType
-      petBreed: $petBreed
-      petAge: $petAge
-      petGender: $petGender
-      petDescription: $petDescription
-      petImage: $petImage
+      name: $petName
+      breed: $petBreed
+      age: $petAge
+      size: $petSize
     ) {
-      _id
+      id
       petName
-      petType
       petBreed
       petAge
-      petGender
-      petDescription
-      petImage
+      petSize
     }
   }
 `;
