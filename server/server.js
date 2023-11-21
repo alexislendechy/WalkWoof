@@ -2,9 +2,10 @@ const express = require("express");
 const { ApolloServer } = require("@apollo/server");
 const { expressMiddleware } = require("@apollo/server/express4");
 const path = require("path");
-const { authMiddleware } = require('./utils/auth');
+const { authMiddleware } = require("./utils/auth");
 
-const { typeDefs, resolvers } = require("./schemas");
+const typeDefs = require("./schemas/typeDefs");
+const resolvers = require("./schemas/resolvers");
 const db = require("./config/connection");
 
 const PORT = process.env.PORT || 3001;
@@ -23,13 +24,20 @@ const startApolloServer = async () => {
 
   // Log incoming GraphQL requests
   app.use("/graphql", (req, res, next) => {
-    console.log(`Received GraphQL request at ${new Date().toISOString()}: ${JSON.stringify(req.body)}`);
+    console.log(
+      `Received GraphQL request at ${new Date().toISOString()}: ${JSON.stringify(
+        req.body
+      )}`
+    );
     next();
   });
 
-  app.use("/graphql", expressMiddleware(server, {
-    context: authMiddleware
-  }));
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: authMiddleware,
+    })
+  );
 
   // if we're in production, serve client/dist as static assets
   if (process.env.NODE_ENV === "production") {
