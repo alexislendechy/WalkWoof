@@ -31,7 +31,7 @@ const ProfileContainer = styled.div`
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   animation: ${gradientAnimation} 10s linear infinite; 
 `;
-//<WalkerProfile/>
+
 
 const MyProfile = () => {
   return (

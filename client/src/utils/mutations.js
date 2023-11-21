@@ -79,16 +79,16 @@ export const ADD_OWNER_PROFILE = gql`
 
 export const ADD_PET_PROFILE = gql`
   mutation addPetProfile(
-    $petName: String!
-    $petBreed: String!
-    $petAge: Int!
-    $petSize: String!
+    $name: String!
+    $breed: String!
+    $age: Int!
+    $size: String!
   ) {
     addPetProfile(
-      name: $petName
-      breed: $petBreed
-      age: $petAge
-      size: $petSize
+      name: $name
+      breed: $breed
+      age: $age
+      size: $size
     ) {
       id
       petName

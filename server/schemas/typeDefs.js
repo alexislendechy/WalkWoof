@@ -7,11 +7,12 @@ const typeDefs = gql`
   }
 
   type User {
-    id: ID!
+    _id: ID!
     username: String!
     email: String!
     password: String!
     role: String!
+    dogs: [PetProfile]
   }
 
   type Walker {
@@ -48,8 +49,9 @@ const typeDefs = gql`
     petAge: Int!  
     petSize: String!  
     petGender: String!
-    petDescription: String!
-    petImage: String!
+    petDescription: String
+    petImage: String
+    owner: User! 
   }
 
   type Query {
@@ -73,7 +75,7 @@ const typeDefs = gql`
       breed: String!
       age: Int!
       size: String!
-    ): PetProfile  # Add a mutation for adding a new pet profile
+    ): PetProfile  
   }
 `;
 

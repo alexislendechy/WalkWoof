@@ -74,13 +74,10 @@ const PetProfile = () => {
       // Make a GraphQL mutation to add a new pet profile
       const { data } = await addPetProfile({
         variables: {
-          petName: petProfile.name,
-          petBreed: petProfile.breed,
-          petAge: parseInt(petProfile.age, 10),
-          petSize: petProfile.size,
-          petGender: petProfile.gender,
-          petDescription: petProfile.description,
-          petImage: petProfile.image,
+          name: petProfile.name,
+          breed: petProfile.breed,
+          age: parseInt(petProfile.age, 10),
+          size: petProfile.size,
         },
       });
 

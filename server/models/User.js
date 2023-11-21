@@ -1,6 +1,9 @@
-const { Schema, model } = require("mongoose");
-const bcrypt = require("bcrypt");
-const validator = require("validator");
+const { Schema, model } = require('mongoose');
+const bcrypt = require('bcrypt');
+const validator = require('validator');
+
+const Dogs = require("./Dogs")
+
 
 const userSchema = new Schema(
   {
@@ -14,7 +17,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      validate: [validator.isEmail, "Invalid email address"],
+      validate: [validator.isEmail, 'Invalid email address'],
     },
     password: {
       type: String,
@@ -23,17 +26,18 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["owner", "admin", "walker"],
-      default: "owner",
+      enum: ['owner', 'admin', 'walker'],
+      default: 'owner',
     },
+    dogs: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }], 
   },
   {
-    timestamps: true, // Automatically manage createdAt and updatedAt fields
+    timestamps: true,
   }
 );
 
-userSchema.pre("save", async function (next) {
-  if (this.isNew || this.isModified("password")) {
+userSchema.pre('save', async function (next) {
+  if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
@@ -47,6 +51,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 userSchema.index({ username: 1, email: 1 }, { unique: true });
 
-const User = model("User", userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;

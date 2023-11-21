@@ -15,6 +15,23 @@ export const GET_PET_PROFILES = gql`
     }
     `;
 
+  export const GET_USER_WITH_DOGS = gql`
+    query GetUserWithDogs($username: String!) {
+      user(username: $username) {
+        _id
+        username
+        email
+        dogs {
+          id
+          name: petName
+          breed: petBreed
+          petAge
+          petSize
+        }
+      }
+    }
+  `;
+
 export const GET_WALKER_PROFILES = gql`
     query getWalkerProfiles {
         walkerProfiles {
@@ -54,7 +71,7 @@ export const GET_OWNER_PROFILES = gql`
     export const GET_USER = gql`
     query getUser($token: String!) {
       user(token: $token) {
-        id
+        _id
         username
         email
       }

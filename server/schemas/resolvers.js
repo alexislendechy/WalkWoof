@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require("../models");
 const PetProfile = require('../models/Dogs');
 const { signToken, AuthenticationError } = require("../utils/auth");
 
@@ -26,18 +26,28 @@ const resolvers = {
         throw new Error("Error fetching pet profiles absbsd");
       }
     },
-    user: (parent, args, context) => {
-      // Extract user information from the context or args.token
-      const token = args.token || context.token;
+    user: async (parent, args, context) => {
+      // Check if there's a user in the context
+      if (context.user) {
+        try {
+          // Fetch the user based on the ID from the context
+          const user = await User.findById(context.user._id);
+          
+          if (!user) {
+            throw new AuthenticationError('User not found');
+          }
 
-      // Validate and decode the token
-      // For simplicity, you might want to use a library like jsonwebtoken
-      const decodedToken = verifyToken(token);
+          // You can perform additional logic or populate related fields here if needed
 
-      // Use the decoded token information to fetch the user
-      const user = fetchUserById(decodedToken.id); // Adjust this line based on your data fetching logic
+          return user;
+        } catch (error) {
+          console.error('Error fetching user:', error);
+          throw new AuthenticationError('Error fetching user');
+        }
+      }
 
-      return user;
+      // If there's no user in the context, throw an AuthenticationError
+      throw new AuthenticationError('Not authenticated');
     },
   },
   Mutation: {
@@ -94,11 +104,29 @@ const resolvers = {
         throw new Error("Error deleting user");
       }
     },
-    addPetProfile: async (_, { name, breed, age, size }) => {
+    addPetProfile: async (_, { name, breed, age, size }, context) => {
       try {
+        // Ensure the user is authenticated
+        if (!context.user) {
+          throw new AuthenticationError("User not authenticated");
+        }
+
         console.log("Adding pet profile:", { name, breed, age, size });
 
-        const petProfile = await PetProfile.create({ name, breed, age, size });
+        // Create the pet profile
+        const petProfile = await PetProfile.create({ 
+          name, 
+          breed, 
+          age, 
+          size,
+          owner: context.user._id, });
+
+        // Associate the pet profile with the user
+        await User.findByIdAndUpdate(
+          context.user.id,
+          { $push: { dogs: petProfile } }, // Assuming you have a field named "pets" in your User model
+          { new: true }
+        );
 
         console.log("Pet profile added successfully:", petProfile);
 
@@ -109,6 +137,7 @@ const resolvers = {
           petBreed: petProfile.breed,
           petAge: petProfile.age,
           petSize: petProfile.size,
+          owner: context.user._id,
         };
       } catch (error) {
         console.error("Error adding pet profile:", error);
