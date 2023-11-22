@@ -97,19 +97,37 @@ export const ADD_OWNER_PROFILE = gql`
 `;
 
 export const ADD_PET_PROFILE = gql`
-mutation AddPetProfile($petName: String!, $petBreed: String!, $petAge: Int!, $petSize: String!, $ownerId: ID!, $petGender: String!, $petImage: String, $petDescription: String) {
-  addPetProfile(petName: $petName, petBreed: $petBreed, petAge: $petAge, petSize: $petSize, ownerId: $ownerId, petGender: $petGender, petImage: $petImage, petDescription: $petDescription) {
-    id
-    petName
-    petBreed
-    petAge
-    petSize
-    ownerId
-    petGender
-    petImage
-    petDescription
+  mutation AddPetProfile(
+    $petName: String!
+    $petBreed: String!
+    $petAge: Int!
+    $petSize: String!
+    $ownerId: ID!
+    $petGender: String!
+    $petImage: String
+    $petDescription: String
+  ) {
+    addPetProfile(
+      petName: $petName
+      petBreed: $petBreed
+      petAge: $petAge
+      petSize: $petSize
+      ownerId: $ownerId
+      petGender: $petGender
+      petImage: $petImage
+      petDescription: $petDescription
+    ) {
+      id
+      petName
+      petBreed
+      petAge
+      petSize
+      ownerId
+      petGender
+      petImage
+      petDescription
+    }
   }
-}
 `;
 
 export const ADD_WALKER_PROFILE = gql`
