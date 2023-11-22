@@ -12,9 +12,9 @@ const FooterContainer = styled.footer`
 const Footer = () => {
   return (
     <FooterContainer>
-      <li>
+      <h3>
         <Contact/>
-      </li>
+      </h3>
       <p>&copy; 2023 WalkWoof. All rights reserved.</p>
     </FooterContainer>
   );
