@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const PetProfile = require("../models/Dogs"); // Ensure correct model name
+const Appointment = require("../models/Appointments");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const mongoose = require('mongoose');
 
@@ -72,6 +73,17 @@ const resolvers = {
         throw new Error("Error fetching user");
       }
     },
+    getAllAppointments: async ({id}) => {
+      try {
+        const appointments = await Appointment.find();
+        return appointments;
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+        throw new Error("Error fetching appointments");
+      }
+    },
+
+
     // Add any other queries if needed
   },
   Mutation: {

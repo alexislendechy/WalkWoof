@@ -129,10 +129,12 @@ export const QUERY_WALKERS = gql`
 export const GET_ALL_APPOINTMENTS = gql`
 query getAllAppointments {
     appointmets {
-    _id
+    id
     date
     time
-    description
+    user
+    walker
+    petProfile
     }
 }
 `;

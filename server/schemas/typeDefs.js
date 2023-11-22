@@ -61,6 +61,15 @@ const typeDefs = gql`
     ownerId: ID! 
   }
 
+  type Appointment {
+    id: ID!
+    date: String!
+    time: String!
+    user: User!
+    walker: Walker!
+    petProfile: PetProfile!
+  }
+
   type Query {
     walkers: [Walker]
     users: [User]
@@ -68,6 +77,7 @@ const typeDefs = gql`
     walker(username: String!): Walker
     getPetProfile(petId: ID!): PetProfile
     getPetProfiles: [PetProfile]
+    getAppointment(id: ID!): Appointment
   }
 
   type Mutation {
