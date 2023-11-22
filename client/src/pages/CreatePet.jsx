@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/mutations';
+import { AuthProvider } from "./../Contexts/AuthContext";
 import CreatePet from '../components/CreatePet';
-import styled from 'styled-components';
+
 
 
 
@@ -12,9 +11,9 @@ import styled from 'styled-components';
 
 const CreatePetProfile = () => {
   return (
-
+        <AuthProvider>
         <CreatePet/>
-
+        </AuthProvider>
   );
 }
 

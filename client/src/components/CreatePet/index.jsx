@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_PET_PROFILE } from '../../utils/mutations';
 import styled from 'styled-components';
+import AuthService from '../../utils/auth.js';
 
 const SignupContainer = styled.div`
   max-width: 400px;
@@ -43,7 +44,10 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
+
 const PetProfile = () => {
+  const ownerIdtest = AuthService.getUserId(); // get the user ID
+  //console.log("User ID:", ownerIdtest);
   // State to store the pet profile data
   const [petProfile, setPetProfile] = useState({
     name: '',
@@ -52,7 +56,9 @@ const PetProfile = () => {
     size: 'Small',
     gender: '', 
     description: '', 
+    image: '', 
   });
+
 
   // Mutation to add a new pet profile
   const [addPetProfile, { error }] = useMutation(ADD_PET_PROFILE);
@@ -66,39 +72,43 @@ const PetProfile = () => {
     });
   };
 
+  const ownerId = AuthService.getUserId(); // get the user ID
+
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    const variables = {
+      petName: petProfile.name,
+      petBreed: petProfile.breed,
+      petAge: parseInt(petProfile.age), 
+      petSize: petProfile.size,
+      petGender: petProfile.gender,
+      ownerId: ownerId, 
+      petImage: petProfile.image, 
+      petDescription: petProfile.description, 
+    };
 
     try {
-      // Make a GraphQL mutation to add a new pet profile
-      const { data } = await addPetProfile({
-        variables: {
-          name: petProfile.name,
-          breed: petProfile.breed,
-          age: parseInt(petProfile.age, 10),
-          size: petProfile.size,
-        },
-      });
-
-      // Handle success
-      console.log("Pet profile added successfully:", petProfile);
-
-      setPetProfile({
+      const { data } = await addPetProfile({ variables });
+      //console.log("VARIABLES: ", variables);
+      //console.log("Added pet profile", data);
+      
+      // Clear form fields
+      setPetProfile({  
         name: '',
         breed: '',
         age: '',
         size: 'Small',
         gender: '',
-        description: '',
-        image: '',
+        description: '', // Add missing gender field
       });
-    } catch (mutationError) {
-      // Handle errors
-      console.error('Error adding pet profile:', mutationError.message);
-      // Display an error message to the user or take appropriate action
+  
+    } catch (error) {
+      console.error(error);
     }
-  };
+  }
+
 
   return (
     <SignupContainer>

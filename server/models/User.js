@@ -29,13 +29,8 @@ const userSchema = new Schema(
       enum: ['owner', 'admin', 'walker'],
       default: 'owner',
     },
-    dogs: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }], 
-    address: {
-      type: String,
-      required: false,
-      default: "N/A",
-    },
-    dogs: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }], 
+    dogs: [{ type: Schema.Types.ObjectId,
+       ref: 'Dog' }], 
     address: {
       type: String,
       required: false,

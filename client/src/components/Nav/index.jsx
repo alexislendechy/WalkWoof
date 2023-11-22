@@ -70,9 +70,7 @@ function Nav() {
       <NavLinks>
         {Auth.loggedIn() ? (
           <>
-            <li className="mx-1">
-              <Link to="/myWalkers!">My trusted walkers!</Link>
-            </li>
+
             <li className="mx-1">
               <Link to="/profile">My Profile</Link>
             </li>
