@@ -4,6 +4,46 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER_ADDRESS } from "../utils/mutations";
 import Auth from "../utils/auth";
+import styled from "styled-components";
+
+// Styled components
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+`;
+
+const Title = styled.h1`
+  color: #333;
+  margin-bottom: 20px;
+`;
+
+const Input = styled.input`
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+`;
+
+const Button = styled.button`
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  color: white;
+  background: rgba(97, 76, 127, 0.6); 
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(97, 76, 127, 0.5); 
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+  font-weight: bold;
+  &:hover {
+    background: rgba(97, 76, 127, 0.8); 
+  }
+  text-decoration: none;
+`;
 
 // Component to update map center
 const ChangeView = ({ center }) => {
@@ -60,21 +100,21 @@ const MapComponent = () => {
   };
 
   return (
-    <div>
-      <h1>MAP</h1>
+    <Container>
+      <Title>MAP</Title>
       <div>
-        <input
+        <Input
           type="text"
           placeholder="Enter an address or location"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <button onClick={() => handleGeocode(searchText)}>
+        <Button onClick={() => handleGeocode(searchText)}>
           Go to address!
-        </button>
-        <button onClick={handleSaveAddress}>Save Address</button>
+        </Button>
+        <Button onClick={handleSaveAddress}>Save Address</Button>
       </div>
-
+  
       {mapInitError ? (
         <p>Error initializing the map: {mapInitError}</p>
       ) : (
@@ -98,7 +138,7 @@ const MapComponent = () => {
           )}
         </MapContainer>
       )}
-    </div>
+    </Container>
   );
 };
 

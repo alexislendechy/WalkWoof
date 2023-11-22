@@ -83,6 +83,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    
+    deletePetProfile(petId: ID!): PetProfile
 
     addUser(
       username: String!
