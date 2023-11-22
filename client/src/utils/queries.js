@@ -88,6 +88,7 @@ export const GET_USER = gql`
       email
       role
       address
+      imageUrl
       dogs {
         id
         petName

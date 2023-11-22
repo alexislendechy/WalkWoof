@@ -19,6 +19,7 @@ const typeDefs = gql`
     role: String!
     dogs: [PetProfile]
     address: String
+    imageUrl: String
     dogWalks: [DogWalk]
   }
 
@@ -83,7 +84,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    
+
     deletePetProfile(petId: ID!): PetProfile
 
     addUser(
@@ -111,6 +112,8 @@ const typeDefs = gql`
 
     updateUserAddress(id: ID!, address: String!): User
     addDogWalk(id: ID!, date: String!, hour: String!): User
+    editUser(id: ID!, username: String, email: String, password: String, role: String, address: String, imageUrl: String): User
+    
   }
 `;
 

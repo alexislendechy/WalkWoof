@@ -51,6 +51,10 @@ const userSchema = new Schema(
       required: false,
       default: "N/A",
     },
+    imageUrl: {
+      type: String,
+      required: false,
+    },
     dogWalks: [dogWalkSchema], // Add the dogWalks field as an array of dogWalkSchema -> Look for resolvers
   },
   {

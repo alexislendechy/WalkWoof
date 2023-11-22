@@ -68,6 +68,7 @@ const resolvers = {
           email: user.email,
           role: user.role,
           address: user.address,
+          imageUrl: user.imageUrl,
           dogs: dogData,
 
         };
@@ -76,15 +77,9 @@ const resolvers = {
         throw new Error("Error fetching user");
       }
     },
-    // getAllAppointments: async () => {
-    //   try {
-    //     const appointments = await Appointment.find();
-    //     return appointments;
-    //   } catch (error) {
-    //     console.error("Error fetching appointments:", error);
-    //     throw new Error("Error fetching appointments");
-    //   }
-    // },
+
+    
+    
     appointments: async () => {
       try {
         const appointments = await Appointment.find().populate('user').populate('walker').populate('petProfile');
@@ -201,6 +196,35 @@ const resolvers = {
       } catch (error) {
         console.error("Error adding pet profile:", error);
         throw new Error("Error adding pet profile");
+      }
+    },
+
+    editUser: async (_, { id, username, email, password, role, address, imageUrl }) => {
+      try {
+        // Fetch the user by ID from the database
+        const user = await User.findById(id);
+    
+        // Check if the user exists
+        if (!user) {
+          throw new Error("User not found");
+        }
+    
+        // Update the user fields
+        if (username !== undefined) user.username = username;
+        if (email !== undefined) user.email = email;
+        if (password !== undefined) user.password = password;
+        if (role !== undefined) user.role = role;
+        if (address !== undefined) user.address = address;
+        if (imageUrl !== undefined) user.imageUrl = imageUrl;
+    
+        // Save the updated user
+        await user.save();
+    
+        // Return the updated user
+        return user;
+      } catch (error) {
+        console.error("Error editing user:", error); // Log the error object
+        throw new Error("Error editing user");
       }
     },
 
