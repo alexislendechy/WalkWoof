@@ -24,7 +24,7 @@ const typeDefs = gql`
 
   type Walker {
     id: ID!
-    name: String!
+    username: String!
     email: String!
     password: String!
     location: String!
@@ -77,7 +77,9 @@ const typeDefs = gql`
     walker(username: String!): Walker
     getPetProfile(petId: ID!): PetProfile
     getPetProfiles: [PetProfile]
-    getAppointment(id: ID!): Appointment
+    getAllAppointment(id: ID!): Appointment
+    getAllAppointments: [Appointment]
+    appointments: [Appointment]
   }
 
   type Mutation {

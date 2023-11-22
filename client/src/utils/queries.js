@@ -126,15 +126,37 @@ export const QUERY_WALKERS = gql`
   }
 `;
 
+// export const GET_ALL_APPOINTMENTS = gql`
+// query getAllAppointments {
+//     appointments {
+//     id
+//     date
+//     time
+//     user
+//     walker
+//     petProfile
+//     }
+// }
+
+// `;
 export const GET_ALL_APPOINTMENTS = gql`
-query getAllAppointments {
-    appointmets {
-    id
-    date
-    time
-    user
-    walker
-    petProfile
+    query getAllAppointments {
+        appointments {
+        id
+        date
+        time
+        user {
+            id
+            username
+        }
+        walker {
+            id
+            username
+        }
+        petProfile {
+            id
+            petName
+        }
     }
 }
 `;
