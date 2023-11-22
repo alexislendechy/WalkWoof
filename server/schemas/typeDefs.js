@@ -6,6 +6,11 @@ const typeDefs = gql`
     name: String!
   }
 
+  type DogWalk {
+    date: String
+    hour: String
+  }
+
   type User {
     id: ID!
     username: String!
@@ -14,6 +19,7 @@ const typeDefs = gql`
     role: String!
     dogs: [PetProfile]
     address: String
+    dogWalks: [DogWalk]
   }
 
   type Walker {
@@ -83,12 +89,14 @@ const typeDefs = gql`
       petAge: Int!
       petSize: String!
       petGender: String!
+
       petDescription: String
       petImage: String
       ownerId: ID!
     ): PetProfile!
 
-    updateUserAddress(userId: ID!, address: String!): User
+    updateUserAddress(id: ID!, address: String!): User
+    addDogWalk(id: ID!, date: String!, hour: String!): User
   }
 `;
 
