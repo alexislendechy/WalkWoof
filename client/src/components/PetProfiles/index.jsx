@@ -34,6 +34,12 @@ const PetCard = styled.div`
   background-color: #f9f9f9;
 `;
 
+const PetImage = styled.img`
+  width: 200px;
+  height: auto;
+  object-fit: cover;
+`;
+
 const PetProfileView = () => {
   //console.log("PetProfileView rendered");
 
@@ -54,7 +60,7 @@ const PetProfileView = () => {
   const { loading, error, data, refetch } = useQuery(GET_USER, {
     variables: { id: userId },
   });
- // console.log("Query executed, data:", data);
+ console.log("Query executed, data:", data);
   if (!data) {
     //console.log("No data returned from query"); 
   }
@@ -78,7 +84,7 @@ const PetProfileView = () => {
             <PetContainer>
               {user.dogs.map((dog) => (
                 <PetCard key={dog.id}>
-                  <img src={dog.image || defaultImage} alt={dog.petName} />
+                  <PetImage src={dog.petImage || defaultImage} alt={dog.petName} />
                     <p>Name: {dog.petName}</p>
                     <p>Breed: {dog.petBreed}</p>
                     <p>Age: {dog.petAge}</p>

@@ -94,6 +94,7 @@ export const GET_USER = gql`
         petBreed
         petAge
         petSize
+        petImage
       }
     }
   }

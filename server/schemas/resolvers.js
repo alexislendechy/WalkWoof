@@ -53,6 +53,9 @@ const resolvers = {
           petBreed: dog.breed,
           petAge: dog.age,
           petSize: dog.size,
+          petGender: dog.gender,
+          petImage: dog.image,
+          petDescription: dog.description,
 
         }));
     
@@ -174,10 +177,10 @@ const resolvers = {
         throw new Error("Error deleting user");
       }
     },
-    addPetProfile: async (parent, { petName, petBreed, petAge, petSize, ownerId, petGender }) => {
+    addPetProfile: async (parent, { petName, petBreed, petAge, petSize, ownerId, petGender, petImage, petDescription }) => {
       try {
-        console.log("Adding pet profile:", { petName, petBreed, petAge, petSize, ownerId, petGender });
-        const petProfile = await PetProfile.create({ name: petName, breed: petBreed, age: petAge, size: petSize, owner: ownerId, gender: petGender });
+        console.log("Adding pet profile:", { petName, petBreed, petAge, petSize, ownerId, petGender, petImage, petDescription });
+        const petProfile = await PetProfile.create({ name: petName, breed: petBreed, age: petAge, size: petSize, owner: ownerId, gender: petGender, image: petImage, description: petDescription });
     
         if (!petProfile.name) {
           throw new Error("Failed to create pet profile, name is null");
@@ -192,7 +195,7 @@ const resolvers = {
     
         // Map MongoDB _id to GraphQL id
         const { _id, name, breed, age, size, gender, image, description, owner, ...rest } = petProfile.toObject();
-        const petProfileWithIdAndPetName = { id: _id.toString(), petName: name, petBreed: breed, petAge: age, petSize: size, petGender: gender, petImage: image, ownerId: owner,  ...rest };
+        const petProfileWithIdAndPetName = { id: _id.toString(), petName: name, petBreed: breed, petAge: age, petSize: size, petGender: gender, petImage: image, petDescription: description, ownerId: owner,  ...rest };
     
         return petProfileWithIdAndPetName;
       } catch (error) {
