@@ -52,7 +52,7 @@ const resolvers = {
           petBreed: dog.breed,
           petAge: dog.age,
           petSize: dog.size,
-          // copy other fields as necessary
+
         }));
     
         console.log("User data:", user);
@@ -65,7 +65,7 @@ const resolvers = {
           role: user.role,
           address: user.address,
           dogs: dogData,
-          // Include any other fields that are required by your GraphQL schema
+
         };
       } catch (error) {
         console.error("Error fetching user:", error); // Log the error object

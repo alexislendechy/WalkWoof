@@ -8,14 +8,15 @@ import jwt_decode from 'jwt-decode';
 import defaultImage from '../../assets/DogPlaceholder.svg';
 
 const SignupContainer = styled.div`
-  max-width: 400px;
+  max-width: 90%;
   margin: auto;
   margin-top: 80px;
   margin-bottom: 80px;
   padding: 20px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 40px rgba(255, 165, 0, 0.7);;
+  box-shadow: 0 0 40px rgba(255, 165, 0, 0.7);
+
 `;
 
 const PetContainer = styled.div`
