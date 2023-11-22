@@ -17,6 +17,7 @@ const typeDefs = gql`
     email: String!
     password: String!
     role: String!
+    dogs: [PetProfile]
     address: String
     dogWalks: [DogWalk]
   }
@@ -55,8 +56,9 @@ const typeDefs = gql`
     petAge: Int!
     petSize: String!
     petGender: String!
-    petDescription: String!
-    petImage: String!
+    petDescription: String
+    petImage: String
+    ownerId: ID! 
   }
 
   type Query {
@@ -69,6 +71,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+
     addUser(
       username: String!
       email: String!
@@ -79,15 +82,19 @@ const typeDefs = gql`
     addComment(text: String!): Comment
     removeComment(id: ID!): Comment
     removeUser(id: ID!): User
+
     addPetProfile(
       petName: String!
       petBreed: String!
       petAge: Int!
       petSize: String!
       petGender: String!
-      petDescription: String!
-      petImage: String!
-    ): PetProfile
+
+      petDescription: String
+      petImage: String
+      ownerId: ID!
+    ): PetProfile!
+
     updateUserAddress(id: ID!, address: String!): User
     addDogWalk(id: ID!, date: String!, hour: String!): User
   }

@@ -12,8 +12,9 @@ const dogSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the user who owns the dog
   },
-  
-  // Add other dog-related fields here
+  gender: String, 
+  image: String, 
+  description: String, 
 });
 
 module.exports = mongoose.model('Dog', dogSchema);

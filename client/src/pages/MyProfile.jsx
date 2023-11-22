@@ -17,27 +17,51 @@ const gradientAnimation = keyframes`
   }
 `;
 
-// Define a styled container for the Home component with animation
+
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  padding: 30px;
+  padding: 10px; // Reduce this value
   background-image: linear-gradient(to bottom right, #b88aad, #f7ddb7, #c995aa);
   border-radius: 10px;
   backdrop-filter: blur(15px);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   animation: ${gradientAnimation} 10s linear infinite;
 `;
-//<WalkerProfile/>
+
+const StyledButton = styled(Link)`
+  display: inline-block;
+  margin-left: 20px;
+  padding: 10px 20px;
+  color: white;
+  background-color: #b88aad;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #c995aa;
+  }
+`;
+
+const ProfilePicContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 10px; 
+`;
 
 const MyProfile = () => {
   return (
     <ProfileContainer>
-      <ProfilePic />
-      <Link to="./createpet"> Add a new lovable pet!</Link>
+      <ProfilePicContainer>
+        <ProfilePic />
+        <StyledButton to="./createpet">Add a new lovable pet!</StyledButton>
+      </ProfilePicContainer>
+      <PetProfiles/>
     </ProfileContainer>
   );
 };

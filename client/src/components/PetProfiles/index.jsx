@@ -1,8 +1,11 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_PET_PROFILES } from '../../utils/queries';
+import {GET_USER}  from '../../utils/queries';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import AuthService from '../../utils/auth.js';
+import jwt_decode from 'jwt-decode';
+import defaultImage from '../../assets/DogPlaceholder.svg';
 
 const SignupContainer = styled.div`
   max-width: 400px;
@@ -12,44 +15,78 @@ const SignupContainer = styled.div`
   padding: 20px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 40px rgba(80, 58, 92, 2);
+  box-shadow: 0 0 40px rgba(255, 165, 0, 0.7);;
 `;
 
+const PetContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+`;
 
-const PetProfileView = ({ petId }) => {
-  const { loading, error, data } = useQuery(GET_PET_PROFILES, {
-    variables: { petId },
+const PetCard = styled.div`
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+`;
+
+const PetProfileView = () => {
+  console.log("PetProfileView rendered");
+  const token = AuthService.getToken();
+  const decodedToken = jwt_decode(token);
+  console.log("Decoded Token:", decodedToken);
+
+  const userId = AuthService.getUserId();
+  console.log("UserId:", userId);
+  const { loading, error, data } = useQuery(GET_USER, {
+    variables: { id: userId },
   });
-
+  console.log("Query executed, data:", data);
+  if (!data) {
+    console.log("No data returned from query"); // Add this line
+  }
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) {
+    console.log("Error loading data:", error); // Add this line
+    return <p>Error: {error.message}</p>;
+  }
+  
 
-  // Check if pet data exists
-  const pet = data.getPetProfiles.find((profile) => profile._id === petId);;
+  // Check if user data exists
+  const user = data.user;
+  console.log("User data:", user); // Add this line
 
   return (
     <SignupContainer>
-    <div>
-      {pet ? (
-        // Pet profile exists, display information
-        <>
-          <h2>Pet Profile</h2>
-          <p>Name: {pet.name}</p>
-          <p>Breed: {pet.breed}</p>
-          <p>Age: {pet.age}</p>
-          <p>Size: {pet.size}</p>
-          <p>Picture: {pet.image}</p>
-          {/* Include other details you want to display */}
-        </>
-      ) : (
-        // Pet profile doesn't exist, display message to create a new profile
-        <div>
-          <p>No pet profile found for the provided ID.</p>
-          <Link to="/profile/createpet">  <p>Create a new pet profile to get started!</p> </Link>
-          {/* You can include a link or button to navigate to the create pet profile page */}
-        </div>
-      )}
-    </div>
+      <div>
+        {user && user.dogs && user.dogs.length > 0 ? (
+          <>
+            <h2>Pet Profiles</h2>
+            <PetContainer>
+              {user.dogs.map((dog) => (
+                <PetCard key={dog.id}>
+                  <img src={dog.image || defaultImage} alt={dog.petName} />
+                    <p>Name: {dog.petName}</p>
+                    <p>Breed: {dog.petBreed}</p>
+                    <p>Age: {dog.petAge}</p>
+                    <p>Size: {dog.petSize}</p>
+                </PetCard>
+              ))}
+            </PetContainer>
+          </>
+        ) : (
+          // User has no associated pets, display message to create a new profile
+          <div>
+            <p>No pet profiles found.</p>
+            <Link to="/profile/createpet">
+              <p>Create a new pet profile to get started!</p>
+            </Link>
+            {/* You can include a link or button to navigate to the create pet profile page */}
+          </div>
+        )}
+      </div>
     </SignupContainer>
   );
 };

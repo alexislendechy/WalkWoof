@@ -39,16 +39,16 @@ const ProfileCard = () => {
   const profile = Auth.getProfile();
   const userId = profile.authenticatedPerson._id;
 
-  console.log("Token:", token); // Debug log - render
-  console.log("Profile:", profile); // Debug log - get an object
+  //console.log("Token:", token); // Debug log - render
+  //console.log("Profile:", profile); // Debug log - get an object
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { id: userId },
     skip: !userId,
   });
 
-  console.log("GraphQL Query Loading:", loading); // Debug log - check loading status
-  console.log("GraphQL Query Error:", error); // Debug log - check for errors
-  console.log("GraphQL Query Data:", data); // Debug log - check received data
+  //console.log("GraphQL Query Loading:", loading); // Debug log - check loading status
+  //console.log("GraphQL Query Error:", error); // Debug log - check for errors
+ // console.log("GraphQL Query Data:", data); // Debug log - check received data
 
   if (loading) return <p>Loading...</p>;
   if (error) {

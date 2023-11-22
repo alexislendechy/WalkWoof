@@ -25,6 +25,23 @@ export const YOUR_DOG_WALKS_QUERY = gql`
   }
 `;
 
+export const GET_USER_WITH_DOGS = gql`
+  query GetUserWithDogs($id: ID!) {
+    user(id: $id) {
+      id
+      username
+      email
+      dogs {
+        id
+        name: petName
+        breed: petBreed
+        petAge
+        petSize
+      }
+    }
+  }
+`;
+
 export const GET_WALKER_PROFILES = gql`
   query getWalkerProfiles {
     walkerProfiles {
@@ -71,6 +88,13 @@ export const GET_USER = gql`
       email
       role
       address
+      dogs {
+        id
+        petName
+        petBreed
+        petAge
+        petSize
+      }
     }
   }
 `;
@@ -100,4 +124,15 @@ export const QUERY_WALKERS = gql`
       walkerImage
     }
   }
+`;
+
+export const GET_ALL_APPOINTMENTS = gql`
+query getAllAppointments {
+    appointmets {
+    _id
+    date
+    time
+    description
+    }
+}
 `;

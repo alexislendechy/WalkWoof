@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const PetProfile = require("../models/Dogs"); // Ensure correct model name
 const { signToken, AuthenticationError } = require("../utils/auth");
+const mongoose = require('mongoose');
 
 const resolvers = {
   Query: {
@@ -31,26 +32,43 @@ const resolvers = {
         if (!id) {
           throw new Error("User ID must be provided");
         }
-
+    
         // Fetch the user by ID from the database
         const user = await User.findById(id);
-
+        
         // Check if the user exists
         if (!user) {
           throw new Error("User not found");
         }
-
+        
+        // Fetch the dogs manually
+        const Dog = mongoose.model('Dog');
+        const dogs = await Dog.find({ _id: { $in: user.dogs } });
+    
+        // Map the dog fields to the expected GraphQL fields
+        const dogData = dogs.map(dog => ({
+          id: dog._id.toString(), // Convert ObjectId to string
+          petName: dog.name,
+          petBreed: dog.breed,
+          petAge: dog.age,
+          petSize: dog.size,
+          // copy other fields as necessary
+        }));
+    
+        console.log("User data:", user);
+    
         // Return the user object
         return {
-          id: user.id,
+          id: user._id.toString(), // Convert ObjectId to string
           username: user.username,
           email: user.email,
           role: user.role,
           address: user.address,
+          dogs: dogData,
           // Include any other fields that are required by your GraphQL schema
         };
       } catch (error) {
-        console.error("Error fetching user:", error);
+        console.error("Error fetching user:", error); // Log the error object
         throw new Error("Error fetching user");
       }
     },
@@ -104,15 +122,33 @@ const resolvers = {
         throw new Error("Error deleting user");
       }
     },
-    addPetProfile: async (_, { name, breed, age, size }) => {
+    addPetProfile: async (parent, { petName, petBreed, petAge, petSize, ownerId, petGender }) => {
       try {
-        const petProfile = await PetProfile.create({ name, breed, age, size });
-        return petProfile;
+        console.log("Adding pet profile:", { petName, petBreed, petAge, petSize, ownerId, petGender });
+        const petProfile = await PetProfile.create({ name: petName, breed: petBreed, age: petAge, size: petSize, owner: ownerId, gender: petGender });
+    
+        if (!petProfile.name) {
+          throw new Error("Failed to create pet profile, name is null");
+        }
+    
+        console.log("Pet profile added successfully:", petProfile);
+    
+        // Fetch the user and update their dogs array
+        const user = await User.findById(ownerId);
+        user.dogs.push(petProfile._id);
+        await user.save();
+    
+        // Map MongoDB _id to GraphQL id
+        const { _id, name, breed, age, size, gender, image, description, owner, ...rest } = petProfile.toObject();
+        const petProfileWithIdAndPetName = { id: _id.toString(), petName: name, petBreed: breed, petAge: age, petSize: size, petGender: gender, petImage: image, ownerId: owner,  ...rest };
+    
+        return petProfileWithIdAndPetName;
       } catch (error) {
         console.error("Error adding pet profile:", error);
         throw new Error("Error adding pet profile");
       }
     },
+
     updateUserAddress: async (_, { id, address }) => {
       try {
         const updatedUser = await User.findByIdAndUpdate(

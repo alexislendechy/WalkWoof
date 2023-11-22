@@ -5,7 +5,6 @@ import { useMutation } from "@apollo/client";
 import Auth from "../../utils/auth";
 import { ADD_USER } from "../../utils/mutations";
 import { AuthProvider } from "../../Contexts/AuthContext";
-import Dashboard from "../../components/Dashboard";
 import styled from "styled-components";
 
 const SignupContainer = styled.div`

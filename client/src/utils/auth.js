@@ -42,9 +42,19 @@ class AuthService {
   // Retrieves the user ID from the decoded token
   getUserId() {
     const token = this.getToken();
+     // Log the token
     if (token) {
       const decoded = decode(token);
-      return decoded.userId; // Adjust this field name based on your JWT token structure
+      
+      return decoded.authenticatedPerson._id; // Adjust this field name based on your JWT token structure
+    }
+    return null;
+  }
+  getUsername() {
+    const token = this.getToken();
+    if (token) {
+      const decoded = decode(token);
+      return decoded.authenticatedPerson.username; // Adjust this field name based on your JWT token structure
     }
     return null;
   }
