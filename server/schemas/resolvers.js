@@ -53,7 +53,7 @@ const resolvers = {
           petBreed: dog.breed,
           petAge: dog.age,
           petSize: dog.size,
-          // copy other fields as necessary
+
         }));
 
         console.log("User data:", user);
@@ -66,7 +66,7 @@ const resolvers = {
           role: user.role,
           address: user.address,
           dogs: dogData,
-          // Include any other fields that are required by your GraphQL schema
+
         };
       } catch (error) {
         console.error("Error fetching user:", error); // Log the error object
@@ -261,6 +261,23 @@ const resolvers = {
         console.error(error);
         throw new Error("Error adding dog walk and creating appointment");
       }
+    },
+    deletePetProfile: async (parent, { petId }) => {
+      const deletedPetProfile = await PetProfile.findByIdAndDelete(petId);
+      if (!deletedPetProfile) {
+        throw new Error("Dog not found");
+      }
+      return {
+        id: deletedPetProfile._id,
+        petName: deletedPetProfile.name,
+        petBreed: deletedPetProfile.breed,
+        petAge: deletedPetProfile.age,
+        petSize: deletedPetProfile.size,
+        petGender: deletedPetProfile.gender,
+        petDescription: deletedPetProfile.description,
+        petImage: deletedPetProfile.image,
+        ownerId: deletedPetProfile.owner
+      };
     },
   },
 };

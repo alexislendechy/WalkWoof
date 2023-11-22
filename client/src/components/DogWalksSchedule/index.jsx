@@ -4,12 +4,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_DOG_WALK } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 
-const Navbar = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  background-color: #333;
-  padding: 10px;
-`;
+
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -17,46 +12,69 @@ const DropdownContainer = styled.div`
 `;
 
 const DropdownButton = styled.button`
-  background-color: #4caf50;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
+display: inline-block;
+height: 50px;
+margin: 10px;
+padding: 10px 20px;
+border-radius: 15px;
+color: white;
+background: rgba(97, 76, 127, 0.6); 
+border: 2px solid rgba(255, 255, 255, 0.5);
+box-shadow: 0 0 10px rgba(97, 76, 127, 0.5); 
+backdrop-filter: blur(4px);
+-webkit-backdrop-filter: blur(4px);
+transition: all 0.3s ease;
+font-weight: bold;
+&:hover {
+  background: rgba(97, 76, 127, 0.8); 
+}
+text-decoration: none;
 `;
 
 const DropdownContent = styled.div`
-  display: none;
+  display: ${props => (props.open ? "flex" : "none")};
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 200px; /* Increased minimum width */
+  min-width: 300px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  padding: 10px; /* Add padding for content */
-
-  ${DropdownContainer}:hover & {
-    display: block;
-  }
+  padding: 10px;
+  margin-top: -5px;
+  left: 50%; 
+  transform: translateX(-50%); 
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center; 
 `;
 
 const Input = styled.input`
   margin-bottom: 10px;
   padding: 8px;
-  width: 100%; /* Ensure input takes full width of the dropdown */
+  width: 100%; 
+  border-radius: 5px;
+`;
+
+const Label = styled.label`
+  font-size: 1em;
+  margin-bottom: 0.5em;
 `;
 
 const Button = styled.button`
-  background-color: #4caf50;
-  color: white;
+background: rgba(97, 76, 127, 0.6); 
+border: 2px solid rgba(255, 255, 255, 0.5);
+box-shadow: 0 0 10px rgba(97, 76, 127, 0.5);
   padding: 10px;
   border: none;
   cursor: pointer;
+  font-size: 1.2em; // Increase the font size
+  border-radius: 5px; // Add some border radius
 `;
-
 const AddDogWalk = ({ id }) => {
   const [date, setDate] = useState("");
   const [hour, setHour] = useState("");
@@ -66,7 +84,7 @@ const AddDogWalk = ({ id }) => {
   const handleDateChange = (e) => {
     const newDate = e.target.value;
     console.log("Date changed:", newDate); // Log the new date
-    console.log("User ID:", id); // THIS IS UNDEFINED ON CHANGE
+    console.log("User ID:", id); 
     setDate(newDate);
   };
 
@@ -93,34 +111,42 @@ const AddDogWalk = ({ id }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Input type="date" value={date} onChange={handleDateChange} />
-      <Input type="time" value={hour} onChange={handleHourChange} />
+      <Label htmlFor="date">Date:</Label>
+      <Input id="date" type="date" value={date} onChange={handleDateChange} />
+      <Label htmlFor="hour">Hour:</Label>
+      <Input id="hour" type="time" value={hour} onChange={handleHourChange} />
       <Button type="submit">Schedule Walk</Button>
     </Form>
   );
 };
 
 // Dropdown component
-const Dropdown = ({ title, children }) => (
-  <DropdownContainer>
-    <DropdownButton>{title}</DropdownButton>
-    <DropdownContent>{children}</DropdownContent>
-  </DropdownContainer>
-);
+const Dropdown = ({ title, children }) => {
+  const [isOpen, setIsOpen] = useState(false); // State to track whether the dropdown is open
 
-// NavigationBar component
-const NavigationBar = () => {
-  const token = Auth.getToken();
-  const profile = Auth.getProfile();
-  const id = profile.authenticatedPerson._id; // Retrieve the user ID
-  console.log("Token:", token); // Debug log - render
+  const toggleOpen = () => setIsOpen(!isOpen); // Function to toggle the dropdown
+
   return (
-    <Navbar>
-      <Dropdown title="Schedule Dog Walk">
-        <AddDogWalk id={id} />
-      </Dropdown>
-    </Navbar>
+    <DropdownContainer>
+      <DropdownButton onClick={toggleOpen}>{title}</DropdownButton>
+      <DropdownContent open={isOpen}>{children}</DropdownContent> 
+    </DropdownContainer>
   );
 };
 
-export default NavigationBar;
+// NavigationBar component
+const ScheduleWalk = () => {
+  const token = Auth.getToken();
+  const profile = Auth.getProfile();
+  const id = profile.authenticatedPerson._id; // Retrieve the user ID
+ // console.log("Token:", token); // Debug log - render
+  return (
+    
+      <Dropdown title="Schedule Dog Walk">
+        <AddDogWalk id={id} />
+      </Dropdown>
+    
+  );
+};
+
+export default ScheduleWalk;

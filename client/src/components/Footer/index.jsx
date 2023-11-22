@@ -3,10 +3,13 @@ import styled from "styled-components";
 import { Contact } from "../Contact/index";
 
 const FooterContainer = styled.footer`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: #584372;
   color: #fff;
   padding: 10px;
-  text-align: center;
 `;
 
 const Footer = () => {

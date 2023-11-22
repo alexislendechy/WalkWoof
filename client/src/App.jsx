@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from 'react-router-dom';
-
+import styled from 'styled-components';
 import {
   ApolloClient,
   InMemoryCache,
@@ -34,18 +34,29 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
+
+const Content = styled.main`
+  flex: 1 0 auto;
+`;
+
 const App = () => {
   return (
-      <ApolloProvider client={client}>
-      <div>
-      <Nav/>
-      <Outlet />
-      <Footer/>
-      </div>
-      </ApolloProvider>
+    <ApolloProvider client={client}>
+      <Layout>
+        <Nav/>
+        <Content>
+          <Outlet />
+        </Content>
+        <Footer/>
+      </Layout>
+    </ApolloProvider>
   );
 };
 
 export default App;
-
 

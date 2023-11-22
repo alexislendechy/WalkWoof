@@ -3,6 +3,8 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import PetProfiles from "../components/PetProfiles";
 import ProfilePic from "../components/ProfilePic";
+import MapComponent from "../components/MapComponent";
+import ScheduleWalk from "../components/DogWalksSchedule";
 
 // Define a keyframe animation for the HomeContainer
 const gradientAnimation = keyframes`
@@ -20,11 +22,10 @@ const gradientAnimation = keyframes`
 
 const ProfileContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding: 10px; // Reduce this value
+  flex-direction: column; // Change this back to column
+  align-items: center; // Align items to the center
+  justify-content: space-around; // Add some space around the items
+  padding: 10px; 
   background-image: linear-gradient(to bottom right, #b88aad, #f7ddb7, #c995aa);
   border-radius: 10px;
   backdrop-filter: blur(15px);
@@ -32,35 +33,80 @@ const ProfileContainer = styled.div`
   animation: ${gradientAnimation} 10s linear infinite;
 `;
 
-const StyledButton = styled(Link)`
-  display: inline-block;
-  margin-left: 20px;
-  padding: 10px 20px;
-  color: white;
-  background-color: #b88aad;
-  border: none;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
+const TopContainer = styled.div`
+  display: flex;
+  padding-left: 15%;
+  flex-direction: row; 
+  align-items: start; 
+  justify-content: space-around; 
+  width: 100%; 
+  border: 5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px); 
+      @media (max-width: 900px) {
+        flex-direction: column; // Change to column when screen width is less than 768px
+        align-items: center; // Center the items
+      }
+`;
 
-  &:hover {
-    background-color: #c995aa;
-  }
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around; // Add some space between the buttons
+  width: 100%; // Take up the full width of the parent
+`;
+
+const StyledButton = styled(Link)`
+display: inline-block;
+margin: 10px;
+padding: 10px 20px;
+border-radius: 15px;
+color: white;
+background: rgba(97, 76, 127, 0.6); 
+border: 2px solid rgba(255, 255, 255, 0.5);
+box-shadow: 0 0 10px rgba(97, 76, 127, 0.5); 
+backdrop-filter: blur(4px);
+-webkit-backdrop-filter: blur(4px);
+transition: all 0.3s ease;
+font-weight: bold;
+&:hover {
+  background: rgba(97, 76, 127, 0.8); 
+}
+text-decoration: none;
+`;
+
+const MapArea = styled.div`
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%; 
 `;
 
 const ProfilePicContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column; 
+  align-items: center; 
   padding-left: 10px; 
 `;
 
 const MyProfile = () => {
   return (
     <ProfileContainer>
-      <ProfilePicContainer>
-        <ProfilePic />
-        <StyledButton to="./createpet">Add a new lovable pet!</StyledButton>
-      </ProfilePicContainer>
+      
+      <TopContainer>
+        <ProfilePicContainer>
+          <ProfilePic />
+          <ButtonContainer>
+          <StyledButton to="./createpet">Add a new lovable pet!</StyledButton>
+          <ScheduleWalk />
+          </ButtonContainer>
+        </ProfilePicContainer>
+        <MapArea>
+            <MapComponent />
+        </MapArea>
+      </TopContainer>
       <PetProfiles/>
     </ProfileContainer>
   );
