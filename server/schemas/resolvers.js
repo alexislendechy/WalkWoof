@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const PetProfile = require("../models/Dogs"); // Ensure correct model name
+const Appointment = require("../models/Appointments");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const mongoose = require('mongoose');
 
@@ -72,6 +73,57 @@ const resolvers = {
         throw new Error("Error fetching user");
       }
     },
+    // getAllAppointments: async () => {
+    //   try {
+    //     const appointments = await Appointment.find();
+    //     return appointments;
+    //   } catch (error) {
+    //     console.error("Error fetching appointments:", error);
+    //     throw new Error("Error fetching appointments");
+    //   }
+    // },
+    appointments: async () => {
+      try {
+        const appointments = await Appointment.find().populate('user').populate('walker').populate('petProfile');
+        return appointments.map(appointment => {
+          if (!appointment.user || !appointment.walker || !appointment.petProfile) {
+            throw new Error('User, Walker or PetProfile not found');
+          }
+          return {
+            id: appointment.id.toString(), // Convert Buffer ID to string
+            date: appointment.date,
+            time: appointment.time,
+            user: {
+              id: appointment.user.id.toString(),
+              username: appointment.user.username,
+              email: appointment.user.email,
+              role: appointment.user.role,
+              address: appointment.user.address,
+            },
+            walker: {
+              id: appointment.walker.id.toString(),
+              username: appointment.walker.username,
+              email: appointment.walker.email,
+              role: appointment.walker.role,
+              address: appointment.walker.address,
+            },
+            petProfile: {
+              id: appointment.petProfile._id.toString(), // Convert ObjectId to string
+              petName: appointment.petProfile.name,
+              petBreed: appointment.petProfile.breed,
+              petAge: appointment.petProfile.age,
+              petSize: appointment.petProfile.size,
+              // Add other PetProfile fields here
+            },
+          };
+        });
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+        throw new Error("Error fetching appointments");
+      }
+    },
+
+
     // Add any other queries if needed
   },
   Mutation: {
