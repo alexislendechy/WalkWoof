@@ -5,6 +5,21 @@ const validator = require('validator');
 const Dogs = require("./Dogs")
 
 
+// Define a sub-schema for dog walks
+//////////////////////////////////////
+const dogWalkSchema = new Schema({
+  date: {
+    type: Date,
+    required: true,
+  },
+  hour: {
+    type: String, // Could be a string like "14:00" or you could use a Date type
+    required: true,
+  },
+});
+//////////////////////////////////////
+//User Model
+//////////////////////////////////////
 const userSchema = new Schema(
   {
     username: {
@@ -36,6 +51,7 @@ const userSchema = new Schema(
       required: false,
       default: "N/A",
     },
+    dogWalks: [dogWalkSchema], // Add the dogWalks field as an array of dogWalkSchema -> Look for resolvers
   },
   {
     timestamps: true,
@@ -61,7 +77,7 @@ userSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 userSchema.set("toJSON", {
-  virtuals: true, // Include virtuals when document is converted to JSON
+  virtuals: true,
 });
 
 const User = model("User", userSchema);

@@ -37,13 +37,13 @@ export function Contact () {
         (error) => {
           console.log(error.text);
           alert("Error sending message. Please try again later.");
-        }
+        } 
       );
   };
 
   return (
     <StyledContactForm>
-      <Link to="/contact">← Go to Signup</Link>
+      <tag>CONTACT US</tag>
       <form ref={form} onSubmit={sendEmail}>
         <label>Name</label>
         <input type="text" name="user_name" required />
