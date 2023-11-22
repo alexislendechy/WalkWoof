@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
 
 // npm i @emailjs/browser
 
@@ -43,7 +42,7 @@ export function Contact () {
 
   return (
     <StyledContactForm>
-      <tag>CONTACT US</tag>
+      <h1>CONTACT US</h1>
       <form ref={form} onSubmit={sendEmail}>
         <label>Name</label>
         <input type="text" name="user_name" required />
@@ -70,9 +69,8 @@ const StyledContactForm = styled.div`
     width: 100%;
     font-size: 16px;
 
-    input {
+    input, textarea {
       width: 100%;
-      height: 35px;
       padding: 7px;
       outline: none;
       border-radius: 5px;
@@ -84,19 +82,8 @@ const StyledContactForm = styled.div`
     }
 
     textarea {
-      max-width: 100%;
-      min-width: 100%;
-      width: 100%;
       max-height: 100px;
       min-height: 100px;
-      padding: 7px;
-      outline: none;
-      border-radius: 5px;
-      border: 1px solid rgb(220, 220, 220);
-
-      &:focus {
-        border: 2px solid rgba(0, 206, 158, 1);
-      }
     }
 
     label {
@@ -106,9 +93,20 @@ const StyledContactForm = styled.div`
     input[type="submit"] {
       margin-top: 2rem;
       cursor: pointer;
-      background: rgb(249, 105, 14);
-      color: white;
-      border: none;
+      background: rgba(255, 255, 255, 0.1);
+
+      color: orange;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px); 
+      padding: 10px 20px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
     }
   }
 `;

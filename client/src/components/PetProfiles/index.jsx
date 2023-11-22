@@ -4,8 +4,9 @@ import {GET_USER}  from '../../utils/queries';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthService from '../../utils/auth.js';
-import jwt_decode from 'jwt-decode';
 import defaultImage from '../../assets/DogPlaceholder.svg';
+import { DELETE_PET } from '../../utils/mutations';
+import { useMutation } from '@apollo/client';
 
 const SignupContainer = styled.div`
   max-width: 90%;
@@ -34,30 +35,39 @@ const PetCard = styled.div`
 `;
 
 const PetProfileView = () => {
-  console.log("PetProfileView rendered");
-  const token = AuthService.getToken();
-  const decodedToken = jwt_decode(token);
-  console.log("Decoded Token:", decodedToken);
+  //console.log("PetProfileView rendered");
+
+  const [deletePet] = useMutation(DELETE_PET);
+
+  const handleDeletePet = async (petId) => {
+    try {
+      await deletePet({ variables: { petId } });
+      refetch(); // Re-fetch the data after deleting a pet
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
 
   const userId = AuthService.getUserId();
-  console.log("UserId:", userId);
-  const { loading, error, data } = useQuery(GET_USER, {
+  //console.log("UserId:", userId);
+  const { loading, error, data, refetch } = useQuery(GET_USER, {
     variables: { id: userId },
   });
-  console.log("Query executed, data:", data);
+ // console.log("Query executed, data:", data);
   if (!data) {
-    console.log("No data returned from query"); // Add this line
+    //console.log("No data returned from query"); 
   }
   if (loading) return <p>Loading...</p>;
   if (error) {
-    console.log("Error loading data:", error); // Add this line
+    //console.log("Error loading data:", error); 
     return <p>Error: {error.message}</p>;
   }
   
 
   // Check if user data exists
   const user = data.user;
-  console.log("User data:", user); // Add this line
+  //console.log("User data:", user); 
 
   return (
     <SignupContainer>
@@ -73,6 +83,7 @@ const PetProfileView = () => {
                     <p>Breed: {dog.petBreed}</p>
                     <p>Age: {dog.petAge}</p>
                     <p>Size: {dog.petSize}</p>
+                    <button onClick={() => handleDeletePet(dog.id)}>Delete</button>
                 </PetCard>
               ))}
             </PetContainer>

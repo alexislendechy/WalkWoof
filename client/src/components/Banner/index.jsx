@@ -1,11 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
+import bannerImage from '../../assets/banner.png';
+
 
 const BannerContainer = styled.div`
-  background-color: #fd7e14; 
+  position: absolute; 
+  z-index: -1; 
+  width: 100%;
+  height: 600px;
+  display: flex;
+  flex-direction: column; 
+  justify-content: flex-start; 
+  align-items: center;
+  background-image: url(${bannerImage}); 
+  background-size: cover;
+  background-position: center; 
   color: #fff;
-  padding: 20px;
+  font-size: 2em;
   text-align: center;
+  opacity: 0.7; 
+  padding-top: 20px; 
 `;
 
 const Banner = () => {

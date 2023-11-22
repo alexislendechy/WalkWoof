@@ -166,3 +166,16 @@ export const ADD_DOG_WALK = gql`
     }
   }
 `;
+
+
+export const DELETE_PET = gql`
+  mutation DeletePet($petId: ID!) {
+    deletePetProfile(petId: $petId) {
+      id
+      petName
+      petBreed
+      petAge
+      petSize
+    }
+  }
+`;

@@ -239,6 +239,23 @@ const resolvers = {
         throw new Error("Error adding dog walk");
       }
     },
+    deletePetProfile: async (parent, { petId }) => {
+      const deletedPetProfile = await PetProfile.findByIdAndDelete(petId);
+      if (!deletedPetProfile) {
+        throw new Error("Dog not found");
+      }
+      return {
+        id: deletedPetProfile._id,
+        petName: deletedPetProfile.name,
+        petBreed: deletedPetProfile.breed,
+        petAge: deletedPetProfile.age,
+        petSize: deletedPetProfile.size,
+        petGender: deletedPetProfile.gender,
+        petDescription: deletedPetProfile.description,
+        petImage: deletedPetProfile.image,
+        ownerId: deletedPetProfile.owner
+      };
+    },
   },
 };
 
