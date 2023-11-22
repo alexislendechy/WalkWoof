@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const appointmentSchema = new mongoose.Schema({
   date: {
@@ -10,22 +10,19 @@ const appointmentSchema = new mongoose.Schema({
     required: true,
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to the User model
+    type: String,
     required: true,
   },
-  walker: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Walker is also a User, but with a different role
-    required: true,
+  address: {
+    type: String,
+    required: false,
   },
   petProfile: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Dog', // Reference to the Dog model
+    type: Array,
     required: true,
   },
 });
 
-const Appointment = mongoose.model('Appointment', appointmentSchema);
+const Appointment = mongoose.model("Appointment", appointmentSchema);
 
 module.exports = Appointment;

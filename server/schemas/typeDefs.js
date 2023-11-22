@@ -58,16 +58,16 @@ const typeDefs = gql`
     petGender: String!
     petDescription: String
     petImage: String
-    ownerId: ID! 
+    ownerId: ID!
   }
 
   type Appointment {
     id: ID!
     date: String!
     time: String!
-    user: User!
-    walker: Walker!
-    petProfile: PetProfile!
+    user: String!
+    petProfile: [String]
+    address: String!
   }
 
   type Query {
@@ -83,7 +83,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    
+
     deletePetProfile(petId: ID!): PetProfile
 
     addUser(
