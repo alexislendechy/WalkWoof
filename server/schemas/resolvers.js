@@ -134,6 +134,23 @@ const resolvers = {
         throw new Error("Error updating user address");
       }
     },
+    addDogWalk: async (_, { id, date, hour }) => {
+      try {
+        const user = await User.findById(id);
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        const newDogWalk = { date: new Date(date), hour };
+        user.dogWalks.push(newDogWalk);
+        await user.save();
+
+        return user;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Error adding dog walk");
+      }
+    },
   },
 };
 

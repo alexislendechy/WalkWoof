@@ -14,6 +14,16 @@ export const GET_PET_PROFILES = gql`
     }
   }
 `;
+export const YOUR_DOG_WALKS_QUERY = gql`
+  query DogWalks {
+    dogWalks {
+      username
+      dogName
+      address
+      walkDuration
+    }
+  }
+`;
 
 export const GET_WALKER_PROFILES = gql`
   query getWalkerProfiles {

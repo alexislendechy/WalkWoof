@@ -47,6 +47,7 @@ export const ADD_USER = gql`
 export const UPDATE_USER_ADDRESS = gql`
   mutation updateUserAddress($id: ID!, $address: String!) {
     updateUserAddress(id: $id, address: $address) {
+      id
       address
     }
   }
@@ -144,7 +145,7 @@ export const ADD_WALKER_PROFILE = gql`
       walkerDescription: $walkerDescription
       walkerImage: $walkerImage
     ) {
-      _id
+      id
       walkerName
       walkerEmail
       walkerPhone
@@ -156,6 +157,18 @@ export const ADD_WALKER_PROFILE = gql`
       walkerWebsite
       walkerDescription
       walkerImage
+    }
+  }
+`;
+
+export const ADD_DOG_WALK = gql`
+  mutation addDogWalk($id: ID!, $date: String!, $hour: String!) {
+    addDogWalk(id: $id, date: $date, hour: $hour) {
+      id
+      dogWalks {
+        date
+        hour
+      }
     }
   }
 `;

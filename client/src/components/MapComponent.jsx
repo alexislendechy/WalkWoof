@@ -1,6 +1,9 @@
 import "leaflet/dist/leaflet.css";
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useMutation } from "@apollo/client";
+import { UPDATE_USER_ADDRESS } from "../utils/mutations";
+import Auth from "../utils/auth";
 
 // Component to update map center
 const ChangeView = ({ center }) => {
@@ -13,6 +16,7 @@ const MapComponent = () => {
   const [searchText, setSearchText] = useState("");
   const [coordinates, setCoordinates] = useState(null);
   const [mapInitError, setMapInitError] = useState(null);
+  const [formattedAddress, setFormattedAddress] = useState("");
 
   useEffect(() => {
     if (coordinates) {
@@ -26,12 +30,33 @@ const MapComponent = () => {
       if (status === "OK" && results.length > 0) {
         const location = results[0].geometry.location;
         setCoordinates({ lat: location.lat(), lng: location.lng() });
+        setFormattedAddress(results[0].formatted_address);
       } else {
         setCoordinates(null);
         setMapInitError(`Geocoding failed: ${status}`);
         console.error("Geocoding failed:", status);
       }
     });
+  };
+
+  const [saveAddress] = useMutation(UPDATE_USER_ADDRESS);
+
+  const handleSaveAddress = async () => {
+    const token = Auth.getToken();
+    const profile = Auth.getProfile();
+    const userId = profile.authenticatedPerson._id;
+
+    try {
+      await saveAddress({
+        variables: {
+          id: userId,
+          address: formattedAddress,
+        },
+      });
+      console.log("Address saved successfully.");
+    } catch (error) {
+      console.error("Error saving address:", error);
+    }
   };
 
   return (
@@ -47,6 +72,7 @@ const MapComponent = () => {
         <button onClick={() => handleGeocode(searchText)}>
           Go to address!
         </button>
+        <button onClick={handleSaveAddress}>Save Address</button>
       </div>
 
       {mapInitError ? (
