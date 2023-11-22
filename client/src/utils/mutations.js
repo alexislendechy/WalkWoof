@@ -47,6 +47,7 @@ export const ADD_USER = gql`
 export const UPDATE_USER_ADDRESS = gql`
   mutation updateUserAddress($id: ID!, $address: String!) {
     updateUserAddress(id: $id, address: $address) {
+      id
       address
     }
   }

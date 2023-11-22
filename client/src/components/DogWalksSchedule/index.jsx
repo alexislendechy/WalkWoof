@@ -113,7 +113,7 @@ const NavigationBar = () => {
   const token = Auth.getToken();
   const profile = Auth.getProfile();
   const id = profile.authenticatedPerson._id; // Retrieve the user ID
-  console.log("Token:", id); // Debug log - render
+  console.log("Token:", token); // Debug log - render
   return (
     <Navbar>
       <Dropdown title="Schedule Dog Walk">
