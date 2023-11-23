@@ -51,7 +51,7 @@ Before you begin, ensure you have the following installed:
    npm install
 4. Start the server and client:
    ```bash
-   npm start
+   npm run start:dev
 ## Usage
 **Register** and log in to your account.
 
