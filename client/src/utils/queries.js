@@ -112,7 +112,7 @@ export const QUERY_CHECKOUT = gql`
 export const QUERY_WALKERS = gql`
   query getWalkers($city: String) {
     walkers(city: $city) {
-      _id
+      id
       walkerName
       walkerEmail
       walkerPhone
@@ -142,23 +142,19 @@ export const QUERY_WALKERS = gql`
 
 // `;
 export const GET_ALL_APPOINTMENTS = gql`
-    query getAllAppointments {
-        appointments {
+  query getAllAppointments {
+    getAllAppointments {
+      id
+      date
+      time
+      user {
         id
-        date
-        time
-        user {
-            id
-            username
-        }
-        walker {
-            id
-            username
-        }
-        petProfile {
-            id
-            petName
-        }
+        username # Assuming your User type has a username field
+      }
+      petProfile {
+        id
+        petName # Assuming your PetProfile type has a petName field
+      }
     }
-}
+  }
 `;

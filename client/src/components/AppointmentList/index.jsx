@@ -29,7 +29,8 @@ const AppointmentList = () => {
             <strong>
               {appointment.date} {appointment.time}
             </strong>{" "}
-            - User: {appointment.user.username} - Walker: {appointment.walker.username} - Dog: {appointment.petProfile.petName}
+            - User: {appointment.user} - Address: {appointment.address} - Dog:{" "}
+            {appointment.petProfile.petName}
           </StyledListItem>
         ))}
       </StyledList>
