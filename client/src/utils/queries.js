@@ -147,14 +147,9 @@ export const GET_ALL_APPOINTMENTS = gql`
       id
       date
       time
-      user {
-        id
-        username # Assuming your User type has a username field
-      }
-      petProfile {
-        id
-        petName # Assuming your PetProfile type has a petName field
-      }
+      user
+      petProfile
+      address
     }
   }
 `;

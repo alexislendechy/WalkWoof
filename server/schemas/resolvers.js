@@ -70,7 +70,6 @@ const resolvers = {
           address: user.address,
           imageUrl: user.imageUrl,
           dogs: dogData,
-
         };
       } catch (error) {
         console.error("Error fetching user:", error); // Log the error object
@@ -89,6 +88,7 @@ const resolvers = {
           date: appointment.date,
           time: appointment.time,
           user: appointment.user,
+          address: appointment.address,
           petProfile: appointment.petProfile,
         }));
       } catch (error) {
@@ -265,7 +265,7 @@ const resolvers = {
         petGender: deletedPetProfile.gender,
         petDescription: deletedPetProfile.description,
         petImage: deletedPetProfile.image,
-        ownerId: deletedPetProfile.owner
+        ownerId: deletedPetProfile.owner,
       };
     },
   },

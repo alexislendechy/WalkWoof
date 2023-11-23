@@ -23,18 +23,22 @@ const AppointmentList = () => {
   return (
     <StyledAppointmentList>
       <h2>Appointments</h2>
-      <StyledList>
-        {data.appointments.map((appointment) => (
-          <StyledListItem key={appointment.id}>
-            <strong>
-              {appointment.date} {appointment.time}
-            </strong>{" "}
-            - User: {appointment.user} - Address: {appointment.address} - Dog:{" "}
-            {appointment.petProfile.petName}
-          </StyledListItem>
-        ))}
-      </StyledList>
-    </StyledAppointmentList>
+      <ul>
+        {data && data.getAllAppointments ? (
+          data.getAllAppointments.map((appointment) => (
+            <li key={appointment.id}>
+              <strong>
+                {appointment.date} {appointment.time}
+              </strong>{" "}
+              - User: {appointment.user} - Address: {appointment.address} - Dog:{" "}
+              {appointment.petProfile}
+            </li>
+          ))
+        ) : (
+          <li>No appointments found</li>
+        )}
+      </ul>
+    </div>
   );
 };
 
