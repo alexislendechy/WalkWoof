@@ -53,7 +53,6 @@ const resolvers = {
           petBreed: dog.breed,
           petAge: dog.age,
           petSize: dog.size,
-
         }));
 
         console.log("User data:", user);
@@ -66,7 +65,6 @@ const resolvers = {
           role: user.role,
           address: user.address,
           dogs: dogData,
-
         };
       } catch (error) {
         console.error("Error fetching user:", error); // Log the error object
@@ -91,6 +89,7 @@ const resolvers = {
           date: appointment.date,
           time: appointment.time,
           user: appointment.user,
+          address: appointment.address,
           petProfile: appointment.petProfile,
         }));
       } catch (error) {
@@ -276,7 +275,7 @@ const resolvers = {
         petGender: deletedPetProfile.gender,
         petDescription: deletedPetProfile.description,
         petImage: deletedPetProfile.image,
-        ownerId: deletedPetProfile.owner
+        ownerId: deletedPetProfile.owner,
       };
     },
   },

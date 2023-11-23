@@ -23,15 +23,19 @@ const AppointmentList = () => {
     <div>
       <h2>Appointments</h2>
       <ul>
-        {data.appointments.map((appointment) => (
-          <li key={appointment.id}>
-            <strong>
-              {appointment.date} {appointment.time}
-            </strong>{" "}
-            - User: {appointment.user} - Address: {appointment.address} - Dog:{" "}
-            {appointment.petProfile.petName}
-          </li>
-        ))}
+        {data && data.getAllAppointments ? (
+          data.getAllAppointments.map((appointment) => (
+            <li key={appointment.id}>
+              <strong>
+                {appointment.date} {appointment.time}
+              </strong>{" "}
+              - User: {appointment.user} - Address: {appointment.address} - Dog:{" "}
+              {appointment.petProfile}
+            </li>
+          ))
+        ) : (
+          <li>No appointments found</li>
+        )}
       </ul>
     </div>
   );
