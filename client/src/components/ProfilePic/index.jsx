@@ -4,7 +4,7 @@ import { GET_USER } from "../../utils/queries.js";
 import styled from "styled-components";
 import defaultImg from "../../assets/default.webp";
 import Auth from "../../utils/auth.js";
-
+import { Link } from "react-router-dom";
 const ProfileCardContainer = styled.div`
   height: 30vh;
   max-width: 400px;
@@ -16,7 +16,24 @@ const ProfileCardContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 0 40px rgba(80, 58, 92, 2);
 `;
-
+const StyledButton = styled(Link)`
+display: inline-block;
+margin: 10px;
+padding: 10px 20px;
+border-radius: 15px;
+color: white;
+background: rgba(97, 76, 127, 0.6); 
+border: 2px solid rgba(255, 255, 255, 0.5);
+box-shadow: 0 0 10px rgba(97, 76, 127, 0.5); 
+backdrop-filter: blur(4px);
+-webkit-backdrop-filter: blur(4px);
+transition: all 0.3s ease;
+font-weight: bold;
+&:hover {
+  background: rgba(97, 76, 127, 0.8); 
+}
+text-decoration: none;
+`;
 const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
@@ -64,6 +81,7 @@ const ProfileCard = () => {
         src={user?.imageUrl || defaultImg}
         alt={`${user?.username}'s profile`}
       />
+      
       <ProfileName>Name: {user?.username}</ProfileName>
       <ProfileRole>Role: {user?.role}</ProfileRole>
     </ProfileCardContainer>

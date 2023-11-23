@@ -13,6 +13,7 @@ import Signup from './pages/Signup';
 import NoMatch from './pages/NoMatch.jsx';
 import MyProfile from './pages/MyProfile.jsx';
 import CreatePet from './pages/CreatePet.jsx';
+import ChangePic from './pages/ChangePic.jsx';
 import Appointments from './pages/Appointments.jsx';
 //import SearchResults from './pages/SearchResults';
 //import Payments from './pages/Payments';
@@ -68,6 +69,11 @@ const router = createBrowserRouter([
         element: <CreatePet />,
         errorElement: <h1 className="display-2">Wrong page!</h1>,
       },
+      {
+        path: "/profile/changePic",
+        element: <ChangePic />,
+        errorElement: <h1 className="display-2">Wrong page!</h1>,
+      }
     ]
   }
 ]);

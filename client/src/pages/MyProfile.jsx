@@ -99,6 +99,7 @@ const MyProfile = () => {
         <ProfilePicContainer>
           <ProfilePic />
           <ButtonContainer>
+          <StyledButton to="./changePic`">change picture</StyledButton>
           <StyledButton to="./createpet">Add a new lovable pet!</StyledButton>
           <ScheduleWalk />
           </ButtonContainer>
