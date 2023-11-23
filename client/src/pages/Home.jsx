@@ -3,7 +3,6 @@ import styled from "styled-components";
 import MapComponent from "../components/MapComponent";
 import Banner from "../components/Banner";
 
-
 //import DogWalksComponent from "../components/DogWalks";
 
 // Home container with vertical layout
@@ -25,8 +24,6 @@ const MainContent = styled.div`
   flex-grow: 1; // Allows the main content to fill the remaining space
 `;
 
-
-
 const MapArea = styled.div`
   flex-grow: 1;
   display: flex;
@@ -34,16 +31,11 @@ const MapArea = styled.div`
   align-items: center;
 `;
 
-
 const Home = () => {
   return (
     <HomeContainer>
       <Banner />
-      <MainContent>
-                <MapArea>
-          <MapComponent />
-        </MapArea>
-      </MainContent>
+      <MainContent></MainContent>
     </HomeContainer>
   );
 };
