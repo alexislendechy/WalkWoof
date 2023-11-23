@@ -61,7 +61,7 @@ const typeDefs = gql`
     petImage: String
     ownerId: ID!
   }
-
+  
   type Appointment {
     id: ID!
     date: String!

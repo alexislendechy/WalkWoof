@@ -66,14 +66,25 @@ const Label = styled.label`
 `;
 
 const Button = styled.button`
-background: rgba(97, 76, 127, 0.6); 
-border: 2px solid rgba(255, 255, 255, 0.5);
-box-shadow: 0 0 10px rgba(97, 76, 127, 0.5);
-  padding: 10px;
+  display: inline-block;
+  height: 50px;
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  color: white;
+  background: rgba(97, 76, 127, 0.6); 
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(97, 76, 127, 0.5); 
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+  font-weight: bold;
+  &:hover {
+    background: rgba(97, 76, 127, 0.8); 
+  }
+  text-decoration: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2em; // Increase the font size
-  border-radius: 5px; // Add some border radius
 `;
 const AddDogWalk = ({ id }) => {
   const [date, setDate] = useState("");
@@ -101,6 +112,7 @@ const AddDogWalk = ({ id }) => {
         await addDogWalk({ variables: { id, date, hour } });
         setDate("");
         setHour("");
+        toggleOpen(); 
       } catch (error) {
         console.error(error);
       }

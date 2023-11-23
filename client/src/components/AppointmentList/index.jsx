@@ -23,22 +23,22 @@ const AppointmentList = () => {
   return (
     <StyledAppointmentList>
       <h2>Appointments</h2>
-      <ul>
+      <StyledList>
         {data && data.getAllAppointments ? (
           data.getAllAppointments.map((appointment) => (
-            <li key={appointment.id}>
+            <StyledListItem key={appointment.id}>
               <strong>
                 {appointment.date} {appointment.time}
               </strong>{" "}
               - User: {appointment.user} - Address: {appointment.address} - Dog:{" "}
               {appointment.petProfile}
-            </li>
+            </StyledListItem>
           ))
         ) : (
-          <li>No appointments found</li>
+          <StyledListItem>No appointments found</StyledListItem>
         )}
-      </ul>
-    </div>
+      </StyledList>
+    </StyledAppointmentList>
   );
 };
 
@@ -57,8 +57,11 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #fff;
+  margin-bottom: 30px; 
+  padding: 20px;
   border-radius: 5px;
+  overflow-wrap: break-word; 
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 15px 15px 40px rgba(255, 165, 0, 0.7); 
 `;

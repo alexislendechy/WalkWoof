@@ -59,7 +59,7 @@ const resolvers = {
 
         }));
 
-        console.log("User data:", user);
+        //console.log("User data:", user);
 
         // Return the user object
         return {
@@ -79,7 +79,7 @@ const resolvers = {
 
     
     
-    appointments: async () => {
+    getAllAppointments: async () => {
       try {
         const appointments = await Appointment.find();
         // If your model uses MongoDB's ObjectId, you might need to convert it to string
@@ -147,7 +147,7 @@ const resolvers = {
     },
     addPetProfile: async (parent, { petName, petBreed, petAge, petSize, ownerId, petGender, petImage, petDescription }) => {
       try {
-        console.log("Adding pet profile:", { petName, petBreed, petAge, petSize, ownerId, petGender, petImage, petDescription });
+        //console.log("Adding pet profile:", { petName, petBreed, petAge, petSize, ownerId, petGender, petImage, petDescription });
         const petProfile = await PetProfile.create({ name: petName, breed: petBreed, age: petAge, size: petSize, owner: ownerId, gender: petGender, image: petImage, description: petDescription });
     
         if (!petProfile.name) {
