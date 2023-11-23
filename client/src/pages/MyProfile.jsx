@@ -35,7 +35,7 @@ const ProfileContainer = styled.div`
 
 const TopContainer = styled.div`
   display: flex;
-  padding-left: 15%;
+  
   flex-direction: row; 
   align-items: start; 
   justify-content: space-around; 
@@ -46,34 +46,36 @@ const TopContainer = styled.div`
   backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px); 
       @media (max-width: 900px) {
-        flex-direction: column; // Change to column when screen width is less than 768px
-        align-items: center; // Center the items
+        flex-direction: column; 
+        align-items: center; 
       }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-around; // Add some space between the buttons
-  width: 100%; // Take up the full width of the parent
+  justify-content: space-around; 
+  width: 100%; 
 `;
 
 const StyledButton = styled(Link)`
-display: inline-block;
-margin: 10px;
-padding: 10px 20px;
-border-radius: 15px;
-color: white;
-background: rgba(97, 76, 127, 0.6); 
-border: 2px solid rgba(255, 255, 255, 0.5);
-box-shadow: 0 0 10px rgba(97, 76, 127, 0.5); 
-backdrop-filter: blur(4px);
--webkit-backdrop-filter: blur(4px);
-transition: all 0.3s ease;
-font-weight: bold;
-&:hover {
-  background: rgba(97, 76, 127, 0.8); 
-}
-text-decoration: none;
+  display: flex;
+  flex: 1; // This will make the buttons the same size
+  justify-content: center; // Center the text within the buttons
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  color: white;
+  background: rgba(97, 76, 127, 0.6); 
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(97, 76, 127, 0.5); 
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+  font-weight: bold;
+  &:hover {
+    background: rgba(97, 76, 127, 0.8); 
+  }
+  text-decoration: none;
 `;
 
 const MapArea = styled.div`
@@ -99,7 +101,7 @@ const MyProfile = () => {
         <ProfilePicContainer>
           <ProfilePic />
           <ButtonContainer>
-          <StyledButton to="./changePic`">change picture</StyledButton>
+          <StyledButton to="./changePic`">Upload a profile picture!</StyledButton>
           <StyledButton to="./createpet">Add a new lovable pet!</StyledButton>
           <ScheduleWalk />
           </ButtonContainer>

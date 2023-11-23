@@ -53,9 +53,13 @@ const resolvers = {
           petBreed: dog.breed,
           petAge: dog.age,
           petSize: dog.size,
+          petGender: dog.gender,
+          petImage: dog.image,
+          petDescription: dog.description,
+
         }));
 
-        console.log("User data:", user);
+        //console.log("User data:", user);
 
         // Return the user object
         return {
@@ -64,6 +68,7 @@ const resolvers = {
           email: user.email,
           role: user.role,
           address: user.address,
+          imageUrl: user.imageUrl,
           dogs: dogData,
         };
       } catch (error) {
@@ -71,15 +76,9 @@ const resolvers = {
         throw new Error("Error fetching user");
       }
     },
-    // getAllAppointments: async () => {
-    //   try {
-    //     const appointments = await Appointment.find();
-    //     return appointments;
-    //   } catch (error) {
-    //     console.error("Error fetching appointments:", error);
-    //     throw new Error("Error fetching appointments");
-    //   }
-    // },
+
+    
+    
     getAllAppointments: async () => {
       try {
         const appointments = await Appointment.find();
@@ -146,28 +145,11 @@ const resolvers = {
         throw new Error("Error deleting user");
       }
     },
-    addPetProfile: async (
-      parent,
-      { petName, petBreed, petAge, petSize, ownerId, petGender }
-    ) => {
+    addPetProfile: async (parent, { petName, petBreed, petAge, petSize, ownerId, petGender, petImage, petDescription }) => {
       try {
-        console.log("Adding pet profile:", {
-          petName,
-          petBreed,
-          petAge,
-          petSize,
-          ownerId,
-          petGender,
-        });
-        const petProfile = await PetProfile.create({
-          name: petName,
-          breed: petBreed,
-          age: petAge,
-          size: petSize,
-          owner: ownerId,
-          gender: petGender,
-        });
-
+        //console.log("Adding pet profile:", { petName, petBreed, petAge, petSize, ownerId, petGender, petImage, petDescription });
+        const petProfile = await PetProfile.create({ name: petName, breed: petBreed, age: petAge, size: petSize, owner: ownerId, gender: petGender, image: petImage, description: petDescription });
+    
         if (!petProfile.name) {
           throw new Error("Failed to create pet profile, name is null");
         }
@@ -180,34 +162,42 @@ const resolvers = {
         await user.save();
 
         // Map MongoDB _id to GraphQL id
-        const {
-          _id,
-          name,
-          breed,
-          age,
-          size,
-          gender,
-          image,
-          description,
-          owner,
-          ...rest
-        } = petProfile.toObject();
-        const petProfileWithIdAndPetName = {
-          id: _id.toString(),
-          petName: name,
-          petBreed: breed,
-          petAge: age,
-          petSize: size,
-          petGender: gender,
-          petImage: image,
-          ownerId: owner,
-          ...rest,
-        };
-
+        const { _id, name, breed, age, size, gender, image, description, owner, ...rest } = petProfile.toObject();
+        const petProfileWithIdAndPetName = { id: _id.toString(), petName: name, petBreed: breed, petAge: age, petSize: size, petGender: gender, petImage: image, petDescription: description, ownerId: owner,  ...rest };
+    
         return petProfileWithIdAndPetName;
       } catch (error) {
         console.error("Error adding pet profile:", error);
         throw new Error("Error adding pet profile");
+      }
+    },
+
+    editUser: async (_, { id, username, email, password, role, address, imageUrl }) => {
+      try {
+        // Fetch the user by ID from the database
+        const user = await User.findById(id);
+    
+        // Check if the user exists
+        if (!user) {
+          throw new Error("User not found");
+        }
+    
+        // Update the user fields
+        if (username !== undefined) user.username = username;
+        if (email !== undefined) user.email = email;
+        if (password !== undefined) user.password = password;
+        if (role !== undefined) user.role = role;
+        if (address !== undefined) user.address = address;
+        if (imageUrl !== undefined) user.imageUrl = imageUrl;
+    
+        // Save the updated user
+        await user.save();
+    
+        // Return the updated user
+        return user;
+      } catch (error) {
+        console.error("Error editing user:", error); // Log the error object
+        throw new Error("Error editing user");
       }
     },
 

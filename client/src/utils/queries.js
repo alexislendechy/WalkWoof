@@ -88,12 +88,14 @@ export const GET_USER = gql`
       email
       role
       address
+      imageUrl
       dogs {
         id
         petName
         petBreed
         petAge
         petSize
+        petImage
       }
     }
   }
@@ -126,19 +128,7 @@ export const QUERY_WALKERS = gql`
   }
 `;
 
-// export const GET_ALL_APPOINTMENTS = gql`
-// query getAllAppointments {
-//     appointments {
-//     id
-//     date
-//     time
-//     user
-//     walker
-//     petProfile
-//     }
-// }
 
-// `;
 export const GET_ALL_APPOINTMENTS = gql`
   query getAllAppointments {
     getAllAppointments {

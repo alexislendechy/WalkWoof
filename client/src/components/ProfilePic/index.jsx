@@ -5,6 +5,7 @@ import styled from "styled-components";
 import defaultImg from "../../assets/default.webp";
 import Auth from "../../utils/auth.js";
 import { Link } from "react-router-dom";
+
 const ProfileCardContainer = styled.div`
   height: 30vh;
   max-width: 400px;
@@ -81,7 +82,6 @@ const ProfileCard = () => {
         src={user?.imageUrl || defaultImg}
         alt={`${user?.username}'s profile`}
       />
-      
       <ProfileName>Name: {user?.username}</ProfileName>
       <ProfileRole>Role: {user?.role}</ProfileRole>
     </ProfileCardContainer>
